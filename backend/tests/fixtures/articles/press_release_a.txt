@@ -1,0 +1,21 @@
+Originally published on the Acme blog.
+
+SUNNYVALE, Calif. - Acme Registry Inc., a provider of software supply chain tooling, today announced the general availability of Acme Guard, a new platform that scans, signs and governs container images and language packages across the entire software delivery lifecycle. The company said the release responds to a sharp increase in malicious packages published to public repositories, which security researchers have tracked at more than two hundred percent growth year over year.
+
+Acme Guard combines artifact storage with policy enforcement, so that development teams can block risky dependencies before they ever reach a build server. Every package that enters the platform is checked against vulnerability databases, license catalogs and a continuously updated list of known malicious publishers. When a package fails a policy check, the platform quarantines it and notifies the owning team through chat, email or ticketing integrations.
+
+"Customers told us they were tired of stitching together five different tools to answer a simple question: what is running in production and can we trust it?" said Dana Whitfield, chief product officer at Acme Registry. "Acme Guard gives platform engineers a single place to define rules, see evidence and prove compliance to auditors without slowing developers down."
+
+The platform ships with native support for Docker, Helm, Maven, npm, PyPI and Go modules, and it can mirror upstream registries so that builds keep working during public outages. A new attestation service signs each build with short lived keys and records provenance metadata that can be verified later at deploy time. Administrators can also generate software bills of materials in both SPDX and CycloneDX formats with a single click.
+
+Early adopters reported measurable results during the preview program. A large financial services firm said it cut average dependency approval time from four days to under two hours, while a European retailer reduced the number of critical vulnerabilities reaching production by roughly seventy percent over one quarter. Both customers highlighted the policy engine as the feature that delivered the fastest return on investment.
+
+Acme Guard is available today in three editions: Team, Business and Enterprise. Pricing is based on the number of active developers and the volume of stored artifacts, and a free thirty day trial can be started from the company website. Existing Acme Registry customers can enable the platform from their account settings at no additional setup cost. The company also plans to publish an open specification for its policy language later this year so that partners and the community can build compatible tooling.
+
+Industry analysts noted that the announcement arrives at a time when regulators in several regions are drafting rules that require vendors to document the origin of every component in the software they sell. Procurement teams at large enterprises have already begun asking suppliers for signed provenance records and machine readable inventories as a condition of contract renewal. Several analysts said that platforms able to produce this evidence automatically, without extra work from developers, are likely to gain share over the next two years.
+
+On the technical side, Acme Guard introduces a rules language that lets administrators express conditions such as blocking any package released within the last forty eight hours, requiring two maintainers for critical libraries, or rejecting images that run as the root user. Rules can be tested against historical build data before they are enforced, which helps teams avoid surprise failures on the day a new policy goes live. A visual dashboard summarizes violations by repository, team and severity, and a public application programming interface exposes the same data for custom reporting.
+
+The company also announced a partner program for consultancies and managed service providers, offering training, certification and shared sales incentives. Acme Registry said it expects more than fifty partners to join by the end of the first quarter, and that it will open regional support centers in London, Singapore and Sao Paulo to provide round the clock assistance for customers operating across multiple time zones.
+
+Source: Acme Registry

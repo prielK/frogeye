@@ -1,0 +1,48 @@
+- slug: platform-consolidation
+  title: Platform consolidation
+  question: "Platform consolidation — are GitLab / GitHub / Harness becoming credible Artifactory replacements?"
+  priority: 1
+  owner_roles: [exec, pm]
+  keywords: [Artifactory replacement, GitLab Package Registry, GitHub Packages, Harness Artifact Registry, Artifact Central, platform consolidation, universal package registry]
+- slug: ai-supply-chain
+  title: AI supply chain
+  question: "AI supply chain — how are competitors securing models, agents, MCP servers?"
+  priority: 1
+  owner_roles: [pm, exec]
+  keywords: [model registry, MCP registry, MCP server, AI supply chain, model scanning, agent governance, AI catalog, pickle exploit]
+- slug: malicious-package-defense
+  title: Malicious-package defense
+  question: "Malicious-package defense — momentum of Socket, Sonatype Firewall, dependency firewalls (Harness, GitLab)."
+  priority: 1
+  owner_roles: [pm, sales]
+  keywords: [malicious package, malicious packages, dependency firewall, Repository Firewall, Sonatype Firewall, Socket.dev, typosquat, dependency confusion]
+- slug: hardened-images-remediation
+  title: Hardened images & auto-remediation
+  question: "Hardened images & auto-remediation — Chainguard / Docker Hardened Images vs. Xray/JAS value."
+  priority: 2
+  owner_roles: [pm, pmm_devrel]
+  keywords: [hardened images, Docker Hardened Images, Chainguard Images, auto-remediation, distroless, JFrog Advanced Security, Xray]
+- slug: pricing-pressure
+  title: Pricing & packaging pressure
+  question: "Pricing & packaging pressure — cloud registries, bundles, free tiers."
+  priority: 2
+  owner_roles: [sales, pmm_devrel]
+  keywords: [pricing change, free tier, price increase, bundled pricing, CodeArtifact pricing, Artifact Registry pricing, licensing change]
+- slug: security-vendor-convergence
+  title: Security vendors moving into artifacts
+  question: "Security vendors moving into artifacts (Snyk, Wiz, PANW) and vice versa."
+  priority: 2
+  owner_roles: [exec]
+  keywords: [Snyk acquisition, Wiz Code, Prisma Cloud, Cortex Cloud, artifact security, ASPM, security vendor acquisition]
+- slug: analyst-recognition
+  title: Analyst & market recognition
+  question: "Analyst & market recognition (e.g., Gartner MQ for Software Supply Chain Security)."
+  priority: 3
+  owner_roles: [pmm_devrel, exec]
+  keywords: [Gartner Magic Quadrant, Magic Quadrant, Forrester Wave, software supply chain security, IDC MarketScape, analyst report, named a Leader]
+- slug: developer-mindshare
+  title: Developer mindshare
+  question: "Developer mindshare — community buzz, OSS adoption, AI-coding-agent integrations."
+  priority: 3
+  owner_roles: [pmm_devrel]
+  keywords: [developer mindshare, GitHub stars, Hacker News, AI coding agent, Copilot integration, Claude Code, Cursor integration, open-source adoption]

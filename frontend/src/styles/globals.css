@@ -1,0 +1,392 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource-variable/schibsted-grotesk/wght.css";
+@import "@fontsource-variable/source-serif-4/opsz.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * FrogEye tokens. Restrained palette: neutrals tinted toward JFrog green (hue 145,
+ * chroma 0.005-0.015); the brand green itself is an accent for primary actions,
+ * the active nav state, focus and signature marks only.
+ */
+
+/* Metric-matched fallbacks so the swap to the web fonts does not reflow the page. */
+@font-face {
+  font-family: "Schibsted Grotesk Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Helvetica");
+  size-adjust: 103.81%;
+  ascent-override: 94.07%;
+  descent-override: 24.83%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Source Serif 4 Fallback";
+  src: local("Georgia");
+  size-adjust: 99.74%;
+  ascent-override: 103.87%;
+  descent-override: 33.59%;
+  line-gap-override: 0%;
+}
+
+:root {
+  --radius: 0.375rem;
+
+  /* Surfaces */
+  --background: oklch(0.985 0.005 145);
+  --foreground: oklch(0.2 0.014 145);
+  --card: oklch(0.997 0.005 145);
+  --card-foreground: oklch(0.2 0.014 145);
+  --popover: oklch(0.997 0.005 145);
+  --popover-foreground: oklch(0.2 0.014 145);
+  --sidebar: oklch(0.965 0.007 145);
+  --sidebar-foreground: oklch(0.2 0.014 145);
+  --sidebar-accent: oklch(0.93 0.01 145);
+  --sidebar-accent-foreground: oklch(0.2 0.014 145);
+  --sidebar-border: oklch(0.905 0.008 145);
+
+  /* Neutral layers and text */
+  --secondary: oklch(0.945 0.008 145);
+  --secondary-foreground: oklch(0.2 0.014 145);
+  --muted: oklch(0.955 0.007 145);
+  --muted-foreground: oklch(0.47 0.013 145);
+  --accent: oklch(0.94 0.009 145);
+  --accent-foreground: oklch(0.2 0.014 145);
+  --border: oklch(0.905 0.008 145);
+  --input: oklch(0.84 0.01 145);
+  --input-hover: oklch(0.74 0.012 145);
+
+  /* Brand: JFrog green #40BE46, with an ink tone for green text on light surfaces */
+  --primary: oklch(0.707 0.195 143.9);
+  --primary-hover: oklch(0.665 0.19 143.9);
+  --primary-active: oklch(0.625 0.18 143.9);
+  --primary-foreground: oklch(0.2 0.045 145);
+  --primary-ink: oklch(0.47 0.13 145);
+  --primary-soft: oklch(0.95 0.04 145);
+  --ring: oklch(0.56 0.15 145);
+
+  /* Meaning: stance, health, alerts. Never the only signal; pair with a label or icon. */
+  --threat: oklch(0.52 0.19 27);
+  --threat-soft: oklch(0.96 0.025 27);
+  --opportunity: oklch(0.5 0.14 252);
+  --opportunity-soft: oklch(0.96 0.025 252);
+  --neutral: oklch(0.48 0.012 145);
+  --neutral-soft: oklch(0.95 0.006 145);
+  --warning: oklch(0.52 0.12 68);
+  --warning-soft: oklch(0.96 0.04 85);
+  --destructive: oklch(0.52 0.19 27);
+
+  /* Browser surfaces */
+  --selection: oklch(0.9 0.07 145);
+  --scrollbar: oklch(0.82 0.01 145);
+  --overlay: oklch(0.2 0.02 145 / 0.36);
+  --shadow-float:
+    0 12px 32px -12px oklch(0.25 0.03 145 / 0.22), 0 2px 6px -2px oklch(0.25 0.03 145 / 0.1);
+
+  /*
+   * Semantic z-index scale (DESIGN.md §4). `dropdown` is for in-flow, non-portaled layers;
+   * portaled floating content (menus, selects, popovers, command palette) uses `popover`,
+   * which clears the sticky header and any open dialog or sheet.
+   */
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-modal-backdrop: 30;
+  --z-modal: 40;
+  --z-popover: 50;
+  --z-toast: 60;
+  --z-tooltip: 70;
+
+  /*
+   * Ingestion funnel (fetched -> new -> documents -> passed): an ordinal ramp in the brand
+   * hue, recessive first stage to strongest last. Validated with the dataviz ordinal checks
+   * (monotone L, adjacent dL >= 0.06, first stage >= 2:1 on the page ground).
+   */
+  --funnel-1: oklch(0.75 0.14 145);
+  --funnel-2: oklch(0.66 0.175 145);
+  --funnel-3: oklch(0.57 0.155 145);
+  --funnel-4: oklch(0.47 0.13 145);
+
+  /*
+   * Meters: one value against its maximum (the signal drawer's "Why ranked here" bars; budget
+   * meters). The fill is a mark (>= 3:1 on card, dataviz-validated); the track is a reference
+   * extent whose value is always printed beside it.
+   */
+  --meter: oklch(0.57 0.155 145);
+  --meter-track: oklch(0.905 0.008 145);
+
+  /*
+   * Chart series (components/charts): four categorical slots in a fixed order (green, teal,
+   * magenta, violet), assigned in sequence and never cycled, and `chart-5`, the recessive grey of
+   * "Other". Hues keep clear of the meaning tokens (threat red, opportunity blue, warning amber),
+   * so a series never reads as a stance. Validated with the dataviz checks on the card in both
+   * themes: every slot >= 3:1 on card and page, all four pairwise CVD-safe (DESIGN.md, Charts).
+   */
+  --chart-1: oklch(0.57 0.155 145);
+  --chart-2: oklch(0.63 0.102 210);
+  --chart-3: oklch(0.51 0.2 325);
+  --chart-4: oklch(0.61 0.2 285);
+  --chart-5: oklch(0.6 0.01 145);
+}
+
+.dark {
+  --background: oklch(0.17 0.008 145);
+  --foreground: oklch(0.94 0.007 145);
+  --card: oklch(0.2 0.009 145);
+  --card-foreground: oklch(0.94 0.007 145);
+  --popover: oklch(0.215 0.01 145);
+  --popover-foreground: oklch(0.94 0.007 145);
+  --sidebar: oklch(0.152 0.008 145);
+  --sidebar-foreground: oklch(0.94 0.007 145);
+  --sidebar-accent: oklch(0.235 0.011 145);
+  --sidebar-accent-foreground: oklch(0.94 0.007 145);
+  --sidebar-border: oklch(0.265 0.01 145);
+
+  --secondary: oklch(0.25 0.01 145);
+  --secondary-foreground: oklch(0.94 0.007 145);
+  --muted: oklch(0.235 0.01 145);
+  --muted-foreground: oklch(0.71 0.012 145);
+  --accent: oklch(0.255 0.011 145);
+  --accent-foreground: oklch(0.94 0.007 145);
+  --border: oklch(0.285 0.01 145);
+  --input: oklch(0.36 0.012 145);
+  --input-hover: oklch(0.46 0.012 145);
+
+  --primary: oklch(0.707 0.195 143.9);
+  --primary-hover: oklch(0.75 0.19 143.9);
+  --primary-active: oklch(0.79 0.17 143.9);
+  --primary-foreground: oklch(0.2 0.045 145);
+  --primary-ink: oklch(0.78 0.16 145);
+  --primary-soft: oklch(0.27 0.05 145);
+  --ring: oklch(0.72 0.18 145);
+
+  --threat: oklch(0.72 0.16 25);
+  --threat-soft: oklch(0.26 0.05 25);
+  --opportunity: oklch(0.74 0.12 250);
+  --opportunity-soft: oklch(0.26 0.045 250);
+  --neutral: oklch(0.72 0.012 145);
+  --neutral-soft: oklch(0.26 0.01 145);
+  --warning: oklch(0.8 0.13 80);
+  --warning-soft: oklch(0.27 0.045 80);
+  --destructive: oklch(0.72 0.16 25);
+
+  --selection: oklch(0.38 0.08 145);
+  --scrollbar: oklch(0.36 0.012 145);
+  --overlay: oklch(0.08 0.01 145 / 0.6);
+  --shadow-float: 0 16px 40px -12px oklch(0 0 0 / 0.55), 0 2px 8px -2px oklch(0 0 0 / 0.4);
+
+  /* Dark flips the anchor: the first stage sits closest to the ground, the last glows. */
+  --funnel-1: oklch(0.42 0.09 145);
+  --funnel-2: oklch(0.54 0.13 145);
+  --funnel-3: oklch(0.66 0.17 145);
+  --funnel-4: oklch(0.8 0.16 145);
+
+  --meter: oklch(0.66 0.17 145);
+  --meter-track: oklch(0.285 0.01 145);
+
+  /* Selected for the dark card, not flipped: the same hues, stepped to the dark band. */
+  --chart-1: oklch(0.66 0.17 145);
+  --chart-2: oklch(0.59 0.102 210);
+  --chart-3: oklch(0.665 0.18 325);
+  --chart-4: oklch(0.56 0.2 285);
+  --chart-5: oklch(0.58 0.01 145);
+}
+
+@theme inline {
+  /* Only token colors exist: no stray palette values can leak into components. */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-ink: var(--primary-ink);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-hover: var(--input-hover);
+  --color-ring: var(--ring);
+  --color-threat: var(--threat);
+  --color-threat-soft: var(--threat-soft);
+  --color-opportunity: var(--opportunity);
+  --color-opportunity-soft: var(--opportunity-soft);
+  --color-neutral: var(--neutral);
+  --color-neutral-soft: var(--neutral-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-overlay: var(--overlay);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-funnel-1: var(--funnel-1);
+  --color-funnel-2: var(--funnel-2);
+  --color-funnel-3: var(--funnel-3);
+  --color-funnel-4: var(--funnel-4);
+  --color-meter: var(--meter);
+  --color-meter-track: var(--meter-track);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Two voices: the serif speaks only in headlines and the masthead. */
+  --font-sans:
+    "Schibsted Grotesk Variable", "Schibsted Grotesk Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-serif:
+    "Source Serif 4 Variable", "Source Serif 4 Fallback", Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+
+  /*
+   * Four sizes, app-wide, and no others (lib/utils.test.ts guards it). Within a size,
+   * weight, colour, spacing and the serif/sans voice carry the hierarchy.
+   */
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.125rem;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.5rem;
+  --text-title: 1.25rem;
+  --text-title--line-height: 1.75rem;
+  --text-display: 2rem;
+  --text-display--line-height: 2.5rem;
+  --text-display--letter-spacing: -0.012em;
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Elevation only for genuinely floating layers (menus, dialogs, toasts). */
+  --shadow-floating: var(--shadow-float);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before {
+    border-color: var(--border);
+  }
+
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--scrollbar) transparent;
+    scrollbar-width: thin;
+    background-color: var(--background);
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  /* Light-on-dark text reads thinner; open the tracking a touch. */
+  .dark body {
+    letter-spacing: 0.006em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+
+  /*
+   * Numbers line up wherever they are marked as data. Applied to values, not whole tables:
+   * the face's tabular comma, period and colon are a full figure wide, so text set with
+   * tnum reads "DevOps . com" (see components/common/Num for counts with separators).
+   */
+  data,
+  kbd,
+  [data-numeric] {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: var(--font-mono);
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: from-font;
+  }
+
+  ::selection {
+    background-color: var(--selection);
+    color: var(--foreground);
+  }
+
+  input,
+  textarea {
+    caret-color: var(--primary-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+/* Editorial headline voice: Source Serif, optical sizing sharpens it as it grows. */
+@utility font-headline {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-optical-sizing: auto;
+}
+
+/* Theme switch crossfade (only runs when motion is allowed; see lib/theme.ts). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+  animation-timing-function: var(--ease-out-quart);
+}
+
+/* Reduced motion: every transition and animation becomes instant. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

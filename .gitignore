@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+dist/
+.env
+.superpowers/
+docs/
+handover.md
+.claude/
+CLAUDE.md
+backend/evals/results/replay.*
+# demo media work dir (frontend/e2e/demo/demo.spec.ts)
+.demo-work/

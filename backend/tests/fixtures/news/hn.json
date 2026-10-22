@@ -1,0 +1,4 @@
+{"hits": [
+ {"objectID": "111", "title": "JFrog launches X", "url": "https://jfrog.com/blog/x", "points": 120, "num_comments": 45, "created_at_i": 1760400000, "story_text": null},
+ {"objectID": "222", "title": "Ask HN: JFrog?", "url": null, "points": 5, "num_comments": 3, "created_at_i": 1760300000, "story_text": "<p>Anyone use it?</p>"}
+]}

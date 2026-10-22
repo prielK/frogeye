@@ -1,0 +1,8 @@
+{
+  "format": 1,
+  "file": "frogeye-demo.sql.gz",
+  "sha256": "60907d6152d32fdad3c37436497c31c79f50fe8e1d0cb95bf4b3b99db7f25668",
+  "alembic_revision": "0010",
+  "captured_at": "2026-10-22T01:13:10.621233+00:00",
+  "sql_bytes": 51865011
+}

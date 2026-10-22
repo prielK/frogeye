@@ -1,0 +1,9 @@
+# Dev override: docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+services:
+  api:
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app/app
+    # A short graceful-shutdown timeout so an open SSE stream (GET /events) cannot stall --reload.
+    command: ["sh", "-c", "python -m app.seed --if-empty && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --timeout-graceful-shutdown 2"]

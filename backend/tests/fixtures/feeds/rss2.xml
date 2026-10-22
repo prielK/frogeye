@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Test Blog</title>
+    <link>https://f.test/</link>
+    <description>d</description>
+    <item>
+      <title>Post one</title>
+      <link>https://f.test/posts/1</link>
+      <guid isPermaLink="true">https://f.test/posts/1</guid>
+      <pubDate>Wed, 14 Oct 2026 09:00:00 GMT</pubDate>
+      <dc:creator>Ann</dc:creator>
+      <category>security</category>
+      <category>ai</category>
+      <description>Summary one</description>
+      <content:encoded><![CDATA[<p>Full body one</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Post two</title>
+      <link>https://f.test/posts/2</link>
+      <guid isPermaLink="false">post-2</guid>
+      <pubDate>Tue, 13 Oct 2026 12:00:00 GMT</pubDate>
+      <description>Summary two</description>
+    </item>
+    <item>
+      <title>Post three</title>
+      <link>https://f.test/posts/3</link>
+      <pubDate>Mon, 05 Oct 2026 08:00:00 GMT</pubDate>
+      <description>Summary three</description>
+    </item>
+  </channel>
+</rss>

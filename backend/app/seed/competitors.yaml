@@ -1,0 +1,62 @@
+# job_board_hints (optional): extra ATS board tokens for app.cli.discover_job_boards to try
+# after the slug and name variants; unverified guesses, each probed once and kept only if
+# the board's postings name the company.
+- {slug: jfrog, name: JFrog, tier: 0, relationship: self, website: https://jfrog.com, ticker: FROG, cik: "0001800667", github_orgs: [jfrog],
+   aliases: [JFrog, Artifactory, JFrog Xray, JFrog Curation, JFrog AppTrust, JFrog ML, Qwak, swampUP, Frogbot, JFrog Fly], ambiguous_aliases: [], negative_keywords: []}
+- {slug: sonatype, name: Sonatype, tier: 1, relationship: competitor, website: https://www.sonatype.com, github_orgs: [sonatype],
+   aliases: [Sonatype, Nexus Repository, Sonatype Nexus, Sonatype Lifecycle, Repository Firewall, Nexus One], ambiguous_aliases: [], negative_keywords: [],
+   description: "Sonatype is a software supply chain company known for Nexus Repository and for running the Maven Central repository, with open-source governance tools such as Lifecycle and Firewall."}
+- {slug: github, name: GitHub, tier: 1, relationship: frenemy, website: https://github.com, ticker: MSFT, github_orgs: [github],
+   aliases: [GitHub Packages, GHCR, GitHub Container Registry, GitHub Advanced Security, Dependabot, GitHub Actions], ambiguous_aliases: [GitHub], negative_keywords: [],
+   disambiguation_hint: "Only GitHub's own product/company news; ignore articles that merely link to a GitHub repo.",
+   description: "GitHub, owned by Microsoft, is a code hosting and collaboration platform that also offers GitHub Packages, GitHub Actions and GitHub Advanced Security."}
+- {slug: gitlab, name: GitLab, tier: 1, relationship: competitor, website: https://about.gitlab.com, ticker: GTLB, cik: "0001653482", github_orgs: [],
+   aliases: [GitLab, Artifact Central, GitLab Ultimate, GitLab Dependency Firewall], ambiguous_aliases: [], negative_keywords: [],
+   description: "GitLab is a DevSecOps platform whose single application covers source control, CI/CD, package and container registries and security scanning."}
+- {slug: cloudsmith, name: Cloudsmith, tier: 1, relationship: competitor, website: https://cloudsmith.com, aliases: [Cloudsmith], ambiguous_aliases: [], negative_keywords: [],
+   description: "Cloudsmith is a cloud-native artifact management platform that hosts, secures and distributes packages and container images in many formats."}
+- {slug: snyk, name: Snyk, tier: 1, relationship: competitor, website: https://snyk.io, github_orgs: [snyk], aliases: [Snyk], ambiguous_aliases: [], negative_keywords: [],
+   description: "Snyk is a developer security company whose platform scans code, open-source dependencies, containers and infrastructure as code for vulnerabilities."}
+- {slug: harness, name: Harness, tier: 1, relationship: competitor, website: https://www.harness.io, github_orgs: [harness],
+   aliases: [Harness.io, Harness Artifact Registry, Harness CI, Harness CD], ambiguous_aliases: [Harness], negative_keywords: [], job_board_hints: [harnessinc],
+   disambiguation_hint: "Harness the DevOps company, not the verb 'to harness'.",
+   description: "Harness is a software delivery platform company offering CI/CD, an artifact registry and supply chain security modules."}
+- {slug: aws, name: AWS, tier: 2, relationship: competitor, website: https://aws.amazon.com, ticker: AMZN,
+   aliases: [AWS CodeArtifact, CodeArtifact, Amazon ECR, Elastic Container Registry, Amazon Inspector], ambiguous_aliases: [AWS], negative_keywords: [],
+   description: "AWS, Amazon's cloud platform, offers developer services including AWS CodeArtifact, the Amazon ECR container registry and Amazon Inspector vulnerability scanning."}
+- {slug: azure, name: Microsoft Azure, tier: 2, relationship: competitor, website: https://azure.microsoft.com, ticker: MSFT,
+   aliases: [Azure Artifacts, Azure Container Registry, Azure DevOps], ambiguous_aliases: [Azure], negative_keywords: [],
+   description: "Microsoft Azure is Microsoft's cloud platform, whose developer services include Azure Artifacts, Azure Container Registry and Azure DevOps."}
+- {slug: google-cloud, name: Google Cloud, tier: 2, relationship: competitor, website: https://cloud.google.com, ticker: GOOGL,
+   aliases: [Google Artifact Registry, GCP Artifact Registry, Assured OSS, Google Cloud Build], ambiguous_aliases: [Google Cloud], negative_keywords: [],
+   description: "Google Cloud is Google's cloud platform, offering Artifact Registry for packages and container images, Artifact Analysis scanning and Assured Open Source Software."}
+- {slug: docker, name: Docker, tier: 2, relationship: competitor, website: https://www.docker.com, github_orgs: [docker],
+   aliases: [Docker Hub, Docker Scout, Docker Hardened Images, "Docker, Inc."], ambiguous_aliases: [Docker], negative_keywords: [],
+   description: "Docker makes Docker Desktop and Docker Hub, its public container image registry, along with the Docker Scout image analysis service."}
+- {slug: chainguard, name: Chainguard, tier: 2, relationship: frenemy, website: https://www.chainguard.dev, github_orgs: [chainguard-dev],
+   aliases: [Chainguard, Wolfi, Chainguard Images, Chainguard Libraries], ambiguous_aliases: [], negative_keywords: [],
+   description: "Chainguard provides minimal, hardened container images and open-source libraries built from source to cut known vulnerabilities and malware risk."}
+- {slug: black-duck, name: Black Duck, tier: 2, relationship: competitor, website: https://www.blackduck.com,
+   aliases: [Black Duck Software, Black Duck SCA, Coverity, Black Duck Polaris], ambiguous_aliases: [Black Duck], negative_keywords: [],
+   description: "Black Duck, formerly the software integrity business of Synopsys, sells application security testing tools including Black Duck SCA and Coverity static analysis."}
+- {slug: aqua, name: Aqua Security, tier: 2, relationship: competitor, website: https://www.aquasec.com, github_orgs: [aquasecurity],
+   aliases: [Aqua Security, Trivy, Aqua Nautilus], ambiguous_aliases: [Aqua], negative_keywords: [], job_board_hints: [aquasec],
+   description: "Aqua Security is a cloud-native security company that sells the Aqua Platform for container and workload protection and maintains the open-source Trivy scanner."}
+- {slug: socket, name: Socket, tier: 2, relationship: competitor, website: https://socket.dev, github_orgs: [SocketDev],
+   aliases: [Socket.dev, Socket Security], ambiguous_aliases: [Socket], negative_keywords: [Socket.IO, WebSocket, websocket, socket programming],
+   disambiguation_hint: "Socket the supply-chain security company, not network sockets.",
+   description: "Socket is a software supply chain security company that detects and blocks malicious and risky open-source packages, including with Socket Firewall."}
+- {slug: endor-labs, name: Endor Labs, tier: 2, relationship: competitor, website: https://www.endorlabs.com, aliases: [Endor Labs], ambiguous_aliases: [], negative_keywords: [],
+   description: "Endor Labs is an application security company offering reachability-based software composition analysis, AI-assisted static analysis and a package firewall."}
+- {slug: checkmarx, name: Checkmarx, tier: 2, relationship: competitor, website: https://checkmarx.com, aliases: [Checkmarx], ambiguous_aliases: [], negative_keywords: [],
+   description: "Checkmarx is an application security testing company whose Checkmarx One platform combines SAST, SCA, secrets detection and container security."}
+- {slug: mend, name: Mend.io, tier: 2, relationship: competitor, website: https://www.mend.io,
+   aliases: [Mend.io, Mend SCA, Mend Renovate, WhiteSource], ambiguous_aliases: [Mend], negative_keywords: [],
+   description: "Mend.io, formerly WhiteSource, is an application security company offering Mend SCA, Mend SAST, Mend AI and the Renovate dependency-update tool."}
+- {slug: wiz, name: Wiz, tier: 3, relationship: partner, website: https://www.wiz.io, aliases: [Wiz.io, Wiz Code, Wiz Research, Wiz Defend], ambiguous_aliases: [Wiz], negative_keywords: [], job_board_hints: [wizinc]}
+- {slug: palo-alto-networks, name: Palo Alto Networks, tier: 3, relationship: competitor, website: https://www.paloaltonetworks.com, ticker: PANW,
+   aliases: [Palo Alto Networks, Prisma Cloud, Prisma AIRS, Cortex Cloud], ambiguous_aliases: [], negative_keywords: []}
+- {slug: veracode, name: Veracode, tier: 3, relationship: competitor, website: https://www.veracode.com, aliases: [Veracode], ambiguous_aliases: [], negative_keywords: []}
+- {slug: anchore, name: Anchore, tier: 3, relationship: competitor, website: https://anchore.com, github_orgs: [anchore], aliases: [Anchore], ambiguous_aliases: [Syft, Grype], negative_keywords: []}
+- {slug: cycode, name: Cycode, tier: 3, relationship: competitor, website: https://cycode.com, aliases: [Cycode], ambiguous_aliases: [], negative_keywords: []}
+- {slug: hugging-face, name: Hugging Face, tier: 3, relationship: partner, website: https://huggingface.co, aliases: [Hugging Face, HuggingFace, Hugging Face Hub], ambiguous_aliases: [], negative_keywords: []}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Dates</title>
+    <link>https://f.test/</link>
+    <description>d</description>
+    <item>
+      <title>No date</title>
+      <link>https://f.test/a</link>
+      <description>A</description>
+    </item>
+    <item>
+      <title>Far future</title>
+      <link>https://f.test/b</link>
+      <pubDate>Fri, 20 Nov 2026 00:00:00 GMT</pubDate>
+      <description>B</description>
+    </item>
+  </channel>
+</rss>

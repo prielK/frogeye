@@ -1,0 +1,5 @@
+context_terms: [devops, devsecops, "ci/cd", pipeline, artifact, registry, repository, package, packages, container, kubernetes,
+  software supply chain, sbom, vulnerability, cve, open source, developer, security scanning, sca, sast, platform engineering, cloud native]
+industry: [software supply chain, supply chain attack, supply-chain attack, malicious package, malicious packages, npm worm, typosquat,
+  dependency confusion, SBOM, SLSA, Sigstore, OpenSSF, Cyber Resilience Act, artifact repository, binary repository, package registry,
+  container registry, MCP server security, AI supply chain, model scanning, pickle exploit, DevSecOps]

@@ -1,0 +1,141 @@
+<!doctype html>
+{#
+  Morning Briefing email (one per edition). Rendered by app/agents/nodes/publish.py with
+  Jinja autoescape ON: every string here derives from scraped sources.
+  Table layout, inline styles, DESIGN.md light tokens as hex (email clients ignore OKLCH):
+    background #F8FBF8  card #FCFFFC  border #DCE1DC  muted ground #EDF1ED
+    foreground #121812  muted-foreground #565D56  primary-ink #1C6D26
+    primary #40BE46 (accent only)  primary-foreground #071B08 (ink on green)
+  Serif only for the headline and story one-liners; everything else is sans.
+  Card text: a takeaway shows its summary, why it matters under its angle's
+  label ("Why it matters for JFrog" on the master and older rows, the edition role's own
+  otherwise, e.g. "In your deals"), an exec card's risk chip (an icon, up / diamond /
+  down, plus "Risk: high"), product labels (text, never colour alone) and up to 3
+  actions, role-labelled on the master. A briefing filed before that falls back to
+  so_what and a single "Now what"; a section row shows the summary's first sentence, or a
+  legacy item's why_it_matters. Empty lines hide.
+#}
+{% set serif = "Georgia, 'Times New Roman', serif" %}
+{% set sans = "-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>{{ content.headline }}</title>
+</head>
+<body style="margin:0;padding:0;background-color:#F8FBF8;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F8FBF8;">
+  <tr>
+    <td align="center" style="padding:24px 12px;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background-color:#FCFFFC;border:1px solid #DCE1DC;border-radius:8px;">
+        <tr>
+          <td style="padding:20px 28px 0 28px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="font-family:{{ serif }};font-size:19px;font-weight:600;color:#121812;"><span style="color:#40BE46;">&#9679;</span> FrogEye</td>
+                <td align="right" style="font-family:{{ sans }};font-size:13px;line-height:18px;color:#565D56;">{{ day_label }} · {{ edition_label }}</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 28px 0 28px;">
+            <h1 style="margin:0;font-family:{{ serif }};font-size:28px;line-height:1.15;font-weight:600;color:#121812;">{{ content.headline }}</h1>
+            <p style="margin:12px 0 0 0;font-family:{{ sans }};font-size:16px;line-height:1.6;color:#121812;">{{ content.lead }}</p>
+            {% if funnel.get("fetched") %}
+            <p style="margin:12px 0 0 0;font-family:{{ sans }};font-size:13px;line-height:18px;color:#565D56;">Scanned {{ funnel.get("fetched") }} · {{ funnel.get("relevant", 0) }} relevant · {{ stories }} in this briefing</p>
+            {% endif %}
+          </td>
+        </tr>
+        {% if content.top_takeaways %}
+        <tr>
+          <td style="padding:24px 28px 0 28px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#EDF1ED;border-radius:8px;">
+              <tr>
+                <td style="padding:16px 20px 18px 20px;">
+                  <h2 style="margin:0;font-family:{{ sans }};font-size:15px;line-height:20px;font-weight:600;color:#121812;">Top takeaways</h2>
+                  {% for t in content.top_takeaways %}
+                  <p style="margin:14px 0 0 0;font-family:{{ sans }};font-size:15px;line-height:1.5;font-weight:600;color:#121812;">{{ t.title }}</p>
+                  {% if body(t) %}
+                  <p style="margin:4px 0 0 0;font-family:{{ sans }};font-size:15px;line-height:1.55;color:#121812;">{{ body(t) }}</p>
+                  {% endif %}
+                  {% if t.why_it_matters %}
+                  <p style="margin:6px 0 0 0;font-family:{{ sans }};font-size:14px;line-height:1.5;color:#121812;"><span style="font-weight:600;color:#1C6D26;">{{ angle_label[t.angle] }}</span> · {{ t.why_it_matters }}</p>
+                  {% endif %}
+                  {% if t.risk_level %}
+                  <p style="margin:6px 0 0 0;font-family:{{ sans }};font-size:13px;line-height:22px;color:#121812;"><span style="display:inline-block;padding:0 8px;border:1px solid #DCE1DC;border-radius:10px;background-color:#FCFFFC;font-weight:600;">{% if t.risk_level == "high" %}&#9650;{% elif t.risk_level == "medium" %}&#9670;{% else %}&#9660;{% endif %} Risk: {{ t.risk_level }}</span></p>
+                  {% endif %}
+                  {% if t.products %}
+                  <p style="margin:6px 0 0 0;font-family:{{ sans }};font-size:13px;line-height:22px;color:#121812;">{% for p in t.products %}<span style="display:inline-block;margin:0 6px 0 0;padding:0 8px;border:1px solid #DCE1DC;border-radius:10px;background-color:#FCFFFC;">{{ product_label(p) }}</span>{% endfor %}</p>
+                  {% endif %}
+                  {% if t.actions %}
+                  <p style="margin:6px 0 0 0;font-family:{{ sans }};font-size:14px;line-height:1.5;font-weight:600;color:#1C6D26;">What to do</p>
+                  <ul style="margin:2px 0 0 0;padding:0 0 0 20px;font-family:{{ sans }};font-size:14px;line-height:1.5;color:#121812;">
+                    {% for a in t.actions %}
+                    <li style="margin:2px 0 0 0;">{% if show_roles %}<span style="font-weight:600;">{{ role_label[a.role] }}</span> · {% endif %}{{ a.text }}</li>
+                    {% endfor %}
+                  </ul>
+                  {% elif t.now_what and t.now_what.strip() %}
+                  <p style="margin:4px 0 0 0;font-family:{{ sans }};font-size:14px;line-height:1.5;color:#565D56;"><span style="font-weight:600;color:#1C6D26;">Now what</span> · {{ t.now_what }}</p>
+                  {% endif %}
+                  {% if t.signal_ids %}
+                  <p style="margin:4px 0 0 0;font-family:{{ sans }};font-size:13px;line-height:18px;color:#565D56;">Sources: {% for sid in t.signal_ids %}<a href="{{ story(sid) }}" style="color:#1C6D26;">{{ sources.get(sid, "the story") }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+                  {% endif %}
+                  {% endfor %}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        {% endif %}
+        {% for section in content.sections %}
+        <tr>
+          <td style="padding:24px 28px 0 28px;">
+            <h2 style="margin:0;padding:0 0 8px 0;border-bottom:1px solid #DCE1DC;font-family:{{ sans }};font-size:15px;line-height:20px;font-weight:600;color:#121812;">{{ section.theme }}</h2>
+            {% for i in section.items %}
+            <p style="margin:14px 0 0 0;font-family:{{ serif }};font-size:17px;line-height:1.3;font-weight:600;color:#121812;">{{ i.one_liner }}</p>
+            {% if gist(i) %}
+            <p style="margin:4px 0 0 0;font-family:{{ sans }};font-size:15px;line-height:1.55;color:#565D56;">{{ gist(i) }}</p>
+            {% endif %}
+            <p style="margin:4px 0 0 0;font-family:{{ sans }};font-size:13px;line-height:18px;color:#565D56;">{% if sources.get(i.signal_id) %}{{ sources[i.signal_id] }} · {% endif %}<a href="{{ story(i.signal_id) }}" style="color:#1C6D26;">Open the story</a></p>
+            {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+        {% if content.watchlist %}
+        <tr>
+          <td style="padding:24px 28px 0 28px;">
+            <h2 style="margin:0;padding:0 0 8px 0;border-bottom:1px solid #DCE1DC;font-family:{{ sans }};font-size:15px;line-height:20px;font-weight:600;color:#121812;">Watchlist</h2>
+            {% for w in content.watchlist %}
+            <p style="margin:12px 0 0 0;font-family:{{ sans }};font-size:15px;line-height:1.55;color:#121812;">{{ w.note }} <a href="{{ story(w.signal_id) }}" style="font-size:13px;color:#1C6D26;">Open the story</a></p>
+            {% endfor %}
+          </td>
+        </tr>
+        {% endif %}
+        {% if quiet %}
+        <tr>
+          <td style="padding:20px 28px 0 28px;">
+            <p style="margin:0;font-family:{{ sans }};font-size:13px;line-height:18px;color:#565D56;">Quiet in this window: {{ quiet|join(", ") }}</p>
+          </td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td style="padding:28px 28px 28px 28px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="background-color:#40BE46;border-radius:6px;">
+                  <a href="{{ url }}" style="display:inline-block;padding:10px 16px;font-family:{{ sans }};font-size:14px;line-height:20px;font-weight:500;color:#071B08;text-decoration:none;">Open the briefing</a>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:12px 0 0 0;font-family:{{ sans }};font-size:13px;line-height:18px;color:#565D56;">Or paste this link: <a href="{{ url }}" style="color:#1C6D26;">{{ url }}</a></p>
+          </td>
+        </tr>
+      </table>
+      <p style="margin:16px 0 0 0;font-family:{{ sans }};font-size:12px;line-height:16px;color:#565D56;">FrogEye competitive intelligence · {{ edition_label }}</p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

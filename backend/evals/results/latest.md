@@ -1,0 +1,293 @@
+# FrogEye eval results
+
+Run 2026-10-22T00:05:13+00:00 in record mode; recordings from 2026-10-21. Models: fast gpt-5-nano, smart gpt-6-luna, embeddings text-embedding-3-small, judge gpt-6-luna.
+
+Cost: $0.0000 live (0 calls); the 447 replayed calls cost $0.0301 when recorded. Cases not recorded: 0.
+
+| Suite | Metric | Value |
+|---|---|---|
+| Triage | Precision | 64.4% (29/45) |
+| Triage | Recall | 96.7% (29/30) |
+| Triage | F1 | 0.773 |
+| Triage | Accuracy | 71.7% (43/60) |
+| Triage | Precision, keyword screen first | 76.3% (29/38) |
+| Triage | Recall, keyword screen first | 96.7% (29/30) |
+| Triage | Accuracy, keyword screen first | 83.3% (50/60) |
+| Triage | Competitor attribution as stored (relevant docs filed relevant) | 69.0% (20/29) |
+| Triage | Competitor attribution in the model's own output | 51.7% (15/29) |
+| Triage | Outputs naming more than 5 competitors | 8.3% (5/60) |
+| Triage | Sent on to disambiguation | 70.0% (42/60) |
+| Competitor disambiguation | Accuracy after disambiguation | 92.9% (26/28) |
+| Competitor disambiguation | Accuracy of triage alone (baseline) | 67.9% (19/28) |
+| Competitor disambiguation | Accuracy as stored (own-feed competitor added) | 96.4% (27/28) |
+| Competitor disambiguation | Cases the agent fixed | 25.0% (7/28) |
+| Competitor disambiguation | Cases the agent broke | 0.0% (0/28) |
+| Competitor disambiguation | Routed to the agent in production | 78.6% (22/28) |
+| Retrieval | Recall@8 | 0.967 |
+| Retrieval | MRR@10 | 1.000 |
+| Retrieval | nDCG@8 | 0.957 |
+| Deterministic guardrails | Catch rate | 100.0% (37/37) |
+| Deterministic guardrails | False-alarm rate | 0.0% (0/21) |
+| Stage-B fact-checker | Unsupported claims removed | 100.0% (16/16) |
+| Stage-B fact-checker | Supported claims removed | 0.0% (0/14) |
+| Stage-B fact-checker | Accuracy | 100.0% (30/30) |
+| Faithfulness of stored analyses | Supported | 56.9% (78/137) |
+| Faithfulness of stored analyses | Partially supported | 40.9% (56/137) |
+| Faithfulness of stored analyses | Unsupported | 2.2% (3/137) |
+| Faithfulness of stored analyses | Items whose citations all resolve | 100.0% (137/137) |
+| Faithfulness of stored analyses | Citations that resolve | 100.0% (219/219) |
+| Faithfulness of stored analyses | Items the judge left unrated | 0.0% (0/137) |
+| Faithfulness of stored analyses | Item words in the cited text the writer saw that the judge also sees | 97.1% (2376/2448) |
+
+## Triage
+
+The fast model's relevance call and competitor attribution on 60 real collected documents, half of them hard cases: word-sense traps (an AI agent 'harness', network sockets, a 'docker run' line, an AWS 'wizard'), JFrog's own news, which triage must never file, and short or headline-only items. Precision and recall are of 'relevant', for the model alone and with the app's keyword screen in front of it.
+
+Cases: 60, scored: 60, not recorded: 0. Labels: labelled blind from each document's raw text, never from FrogEye's outputs.
+
+| Metric | Value |
+|---|---|
+| Precision | 64.4% (29/45) |
+| Recall | 96.7% (29/30) |
+| F1 | 0.773 |
+| Accuracy | 71.7% (43/60) |
+| Precision, keyword screen first | 76.3% (29/38) |
+| Recall, keyword screen first | 96.7% (29/30) |
+| Accuracy, keyword screen first | 83.3% (50/60) |
+| Competitor attribution as stored (relevant docs filed relevant) | 69.0% (20/29) |
+| Competitor attribution in the model's own output | 51.7% (15/29) |
+| Outputs naming more than 5 competitors | 8.3% (5/60) |
+| Sent on to disambiguation | 70.0% (42/60) |
+
+| Breakdown | Cases | Metrics |
+|---|---|---|
+| hard_negative | 22 | Accuracy 40.9% (9/22); With the keyword screen 63.6% (14/22) |
+| hard_positive | 9 | Accuracy 88.9% (8/9); With the keyword screen 88.9% (8/9) |
+| negative | 8 | Accuracy 62.5% (5/8); With the keyword screen 87.5% (7/8) |
+| positive | 21 | Accuracy 100.0% (21/21); With the keyword screen 100.0% (21/21) |
+
+Failures (26):
+
+| Case | Expected | Got | Detail |
+|---|---|---|---|
+| triage-01 | relevant [chainguard] | relevant [chainguard, harness] | doc 85 "Introducing Chainguard Harness: Vulnerability hunting and remediation powered by Claude My" (hard_positive); model listed 2 slugs [chainguard, harness]; keyword screen passed; model: News about Chainguard Harness and frontier AI for vulnerability hunting. |
+| triage-02 | relevant [github] | relevant [] | doc 5317 "GitHub package firewall in public preview" (positive); model listed 0 slugs []; keyword screen passed; model: GitHub announces package firewall for malware protection in package workflows—relevant to software supply chain security and CI/CD tooling. |
+| triage-03 | relevant [gitlab] | relevant [anchore, black-duck, chainguard, checkmarx, cloudsmith, docker, github, gitlab, mend, snyk, sonatype, veracode] | doc 23 "Dependency Firewall: Block risky packages before the build" (positive); model listed 13 slugs [anchore, black-duck, chainguard, checkmarx, cloudsmith, docker, github, gitlab, mend, snyk, sonatype, veracode]; keyword screen passed; model: Industry news about GitLab's Dependency Firewall affecting CI/CD security tooling |
+| triage-08 | relevant [github] | relevant [] | doc 4743 "Case Study: GitHub Expands Malware Advisories Across Eight Ecosystems with OpenSSF" (positive); model listed 0 slugs []; keyword screen passed; model: Industry news: expanded malware advisories across multiple ecosystems affecting software supply chain security |
+| triage-11 | relevant [mend] | relevant [github, mend] | doc 4432 "Mend.io upgrades 184 open source organizations to the Renovate Community (OSS) plan" (positive); model listed 2 slugs [github, mend]; keyword screen passed; model: Mend.io Renovate OSS plan upgrade impacts open-source ecosystem and dependency management tooling relevant to supply chain security |
+| triage-17 | relevant [github] | relevant [] | doc 31 "Open source license compliance generally available" (positive); model listed 0 slugs []; keyword screen passed; model: GitHub feature on open source license compliance impacts software supply chain governance |
+| triage-19 | relevant [] | relevant [anchore, aws, azure, black-duck, checkmarx, cycode, docker, endor-labs, github, gitlab, google-cloud, harness, mend, palo-alto-networks, snyk, socket, sonatype, veracode] | doc 5118 "Buildkite Adds Scoped Secrets and New Agentic CI Tools" (hard_positive); model listed 21 slugs [anchore, aws, azure, black-duck, checkmarx, cycode, docker, endor-labs, github, gitlab, google-cloud, harness, mend, palo-alto-networks, snyk, socket, sonatype, veracode]; keyword screen passed; model: Industry news on CI/CD tooling and secret management impacting software supply chain workflo |
+| triage-20 | relevant [google-cloud] | relevant [] | doc 5128 "Dynamic MCP Server Discovery on Google Cloud" (hard_positive); model listed 0 slugs []; keyword screen passed; model: Industry news about MCP server discovery and tooling relevant to DevSecOps/Artifact management ecosystem. |
+| triage-22 | relevant [azure] | not relevant | doc 4640 "Announcing: Agent Harness in Microsoft Agent Framework" (hard_positive); model listed 0 slugs []; keyword screen stopped it; model: Microsoft Agent Framework news; no direct JFrog competitor mention and not tied to software supply chain/DevSecOps |
+| triage-23 | relevant [snyk] | relevant [anchore, aws, azure, chainguard, checkmarx, cloudsmith, cycode, docker, github, gitlab, google-cloud, harness, mend, palo-alto-networks, snyk, socket, sonatype, veracode] | doc 1097 "Introducing new Snyk AppRisk integrations: Enhancing application risk management with deve" (hard_positive); model listed 21 slugs [anchore, aws, azure, chainguard, checkmarx, cloudsmith, cycode, docker, github, gitlab, google-cloud, harness, mend, palo-alto-networks, snyk, socket, sonatype, veracode]; keyword screen passed; model: Industry news about Snyk AppRisk integrations impacting  |
+| triage-32 | not relevant | relevant [] | doc 5423 "HAR 1.0: The open harness for AI coding workflows you can trust and verify" (hard_negative); model listed 0 slugs []; keyword screen passed; model: HAR open-source AI coding workflow harness; potential impact on AI/ML supply chain tooling and MCP agents. |
+| triage-33 | not relevant | relevant [anchore, aqua, aws, azure, black-duck, chainguard, checkmarx, cloudsmith, cycode, docker, endor-labs, github, gitlab, google-cloud, harness, hugging-face, mend, palo-alto-networks, snyk, socket, sonatype, veracode, wiz] | doc 5412 "Show HN: Harness Studio: an open-source desktop coding agent for any model" (hard_negative); model listed 23 slugs [anchore, aqua, aws, azure, black-duck, chainguard, checkmarx, cloudsmith, cycode, docker, endor-labs, github, gitlab, google-cloud, harness, hugging-face, mend, palo-alto-networks, snyk, socket, sonatype, veracode, wiz]; keyword screen passed; model: Industry news about AI  |
+| triage-34 | not relevant | relevant [anchore, aqua, aws, azure, chainguard, checkmarx, cloudsmith, cycode, docker, github, gitlab, google-cloud, harness, mend, palo-alto-networks, snyk, socket, sonatype, veracode] | doc 5422 "Which companies build both their own model and their own harness for it" (hard_negative); model listed 31 slugs [anchore, aqua, aws, azure, chainguard, checkmarx, cloudsmith, cycode, docker, github, gitlab, google-cloud, harness, mend, palo-alto-networks, snyk, socket, sonatype, veracode]; keyword screen passed; model: Industry news about AI model harnesses and pricing; mentions OpenAI a |
+| triage-35 | not relevant | relevant [] | doc 5221 "Harness²: Recursive Agent Harnessing for an Open World (Google Research)" (hard_negative); model listed 0 slugs []; keyword screen stopped it; model: AI/ML agent harnessing research; not about JFrog but industry AI/ML supply chain relevance |
+| triage-39 | not relevant | relevant [] | doc 5306 "Self-hosted AI spend attribution" (hard_negative); model listed 0 slugs []; keyword screen passed; model: Industry news about self-hosted AI spend attribution tools and cost-tracking for AI providers (Claude, OpenAI) impacting DevSecOps tooling. |
+| triage-41 | not relevant | relevant [] | doc 4899 "JFrog sets third-quarter results date. UBS targets JFrog stock at USD 125 - ad-hoc-news.de" (hard_negative); model listed 0 slugs []; keyword screen stopped it; model: Industry news about JFrog earnings timing and UBS price target; affects market perception |
+| triage-43 | not relevant | relevant [] | doc 2487 "JFrog Business Value Center: Celebrate the ROI of Your Software Supply Chain" (hard_negative); model listed 0 slugs []; keyword screen passed; model: Industry news about JFrog’s ROI/Value Center; not about a competitor |
+| triage-44 | not relevant | relevant [] | doc 4713 "jfrog/jfrog-cli 2.127.0" (hard_negative); model listed 0 slugs []; keyword screen stopped it; model: Industry software tooling release notes for JFrog CLI relevant to DevSecOps and CI/CD tooling |
+| triage-45 | not relevant | relevant [] | doc 2492 "JFrog Artifactory Supports LuaRocks Hosting for NGINX, OpenResty and Kong" (hard_negative); model listed 0 slugs []; keyword screen stopped it; model: Industry tech news about Artifactory and LuaRocks hosting impacting DevOps tooling and package management |
+| triage-48 | not relevant | relevant [] | doc 4126 "Amazon DynamoDB Streams now supports timestamp-based stream processing" (negative); model listed 0 slugs []; keyword screen stopped it; model: AWS DynamoDB Streams timing feature; industry news for cloud data streaming and PITR use cases relevant to data management in DevOps |
+| triage-49 | not relevant | relevant [] | doc 4195 "Amazon GameLift Servers adds CPU burstability for container fleets" (hard_negative); model listed 0 slugs []; keyword screen passed; model: AWS feature news affects cloud/container runtimes relevant to software supply chain and DevOps tooling |
+| triage-50 | not relevant | relevant [] | doc 4132 "Amazon MSK Connect and AWS Glue Schema Registry are now available in the AWS European Sove" (hard_negative); model listed 0 slugs []; keyword screen passed; model: AWS streaming ecosystem update; relevant to Apache Kafka, MSK, schema registry in sovereign cloud—impacts SecDevOps tooling and data governance. |
+| triage-51 | not relevant | relevant [] | doc 4120 "AWS End User Messaging adds a guided wizard for RCS registration videos" (hard_negative); model listed 0 slugs []; keyword screen stopped it; model: AWS End User Messaging RCS wizard relates to messaging workflow for app/device verification; not directly about JFrog but touches messaging platforms and device registration workflows in software ecosystem. |
+| triage-52 | not relevant | relevant [] | doc 4703 "Meta ships Muse Spark Open, its answer to China’s best open-weight models" (negative); model listed 0 slugs []; keyword screen passed; model: Open-weight LLMs and licensing trends impacting AI/ML supply chain ecosystems |
+| triage-53 | not relevant | relevant [] | doc 5117 "EmbeddingGemma 2 Expands Beyond Text to Support Code, Images, Video, and Audio" (negative); model listed 0 slugs []; keyword screen stopped it; model: Multimodal embedding tech topic impacting AI/ML retrieval, relevant to AI/ML supply chain and search. |
+| triage-58 | not relevant | relevant [] | doc 5108 "Exploited Fortinet Bug Linked to Stealthy FortiGate Implant in Telecom Hack" (hard_negative); model listed 0 slugs []; keyword screen passed; model: Industry security news about Fortinet vulnerabilities and adversary activity; mentions Palo Alto Networks but not JFrog specifics. |
+
+## Competitor disambiguation
+
+The smart tool-using agent that re-judges triage when a document names an ambiguous competitor. 28 real documents: the company itself, a same-name product of another vendor (Chainguard Harness, Microsoft's Agent Harness), a word sense (agent harness, network socket, 'docker run') or a passing mention.
+
+Cases: 28, scored: 28, not recorded: 0. Labels: labelled blind from each document's raw text, never from FrogEye's outputs.
+
+| Metric | Value |
+|---|---|
+| Accuracy after disambiguation | 92.9% (26/28) |
+| Accuracy of triage alone (baseline) | 67.9% (19/28) |
+| Accuracy as stored (own-feed competitor added) | 96.4% (27/28) |
+| Cases the agent fixed | 25.0% (7/28) |
+| Cases the agent broke | 0.0% (0/28) |
+| Routed to the agent in production | 78.6% (22/28) |
+
+| Breakdown | Cases | Metrics |
+|---|---|---|
+| about the competitor | 12 | Accuracy 91.7% (11/12) |
+| not about it | 16 | Accuracy 93.8% (15/16) |
+
+Failures (2):
+
+| Case | Expected | Got | Detail |
+|---|---|---|---|
+| disambig-08 | not about harness | about [harness, snyk] (triage alone: [anchore, aws, azure, chainguard, checkmarx, cloudsmith, cycode, docker, github, gitlab, google-cloud, harness, mend, palo-alto-networks, snyk, socket, sonatype, veracode]) | doc 1097 "Introducing new Snyk AppRisk integrations: Enhancing application risk management with deve" mentions 'Harness'; agent: Snyk announces new AppRisk integrations, including Harness; this is a product update involving both vendors. |
+| disambig-24 | about black-duck | about [] (triage alone: []) | doc 4642 "The reality of using LLMs to identify open source risk: Helpful though limited" mentions 'Black Duck'; agent: Examines LLM limitations in open-source risk and license analysis, relevant to SCA and software supply-chain security; Black Duck is the publisher, not the subject. |
+
+## Retrieval
+
+Search quality on 25 analyst queries (keyword-style, paraphrased/semantic and competitor-filtered) over a fixed corpus of 86 documents and 15 JFrog KB pages, per mode: keyword only, vector only, hybrid (the app's default) and hybrid with the LLM rerank. Recall@8, MRR@10 and nDCG@8 over the labelled relevant items.
+
+Cases: 25, scored: 25, not recorded: 0. Labels: labelled blind from each document's raw text, never from FrogEye's outputs.
+
+| Metric | Value |
+|---|---|
+| Recall@8 | 0.967 |
+| MRR@10 | 1.000 |
+| nDCG@8 | 0.957 |
+
+| Breakdown | Cases | Metrics |
+|---|---|---|
+| keyword | 25 | Recall@8 0.618; MRR@10 0.760; nDCG@8 0.652 |
+| vector | 25 | Recall@8 0.954; MRR@10 0.980; nDCG@8 0.929 |
+| hybrid | 25 | Recall@8 0.967; MRR@10 1.000; nDCG@8 0.957 |
+| hybrid_rerank | 25 | Recall@8 0.962; MRR@10 0.903; nDCG@8 0.890 |
+| hybrid · keyword queries | 10 | Recall@8 1.000; MRR@10 1.000; nDCG@8 0.997 |
+| hybrid · semantic queries | 11 | Recall@8 0.925; MRR@10 1.000; nDCG@8 0.905 |
+| hybrid · filtered queries | 4 | Recall@8 1.000; MRR@10 1.000; nDCG@8 1.000 |
+
+Failures (2):
+
+| Case | Expected | Got | Detail |
+|---|---|---|---|
+| retrieval-11 | doc:23, doc:56, doc:59, doc:5317, doc:2475, doc:2, kb:4 | doc:23, kb:4, doc:2475, doc:5092, doc:4743, kb:2, doc:5317, doc:42 | 'block malicious open source packages before they reach developers' (semantic): not in the top 8: doc:56, doc:59, doc:2 |
+| retrieval-12 | doc:2497, doc:2499, doc:81, doc:2511, doc:2495 | doc:81, doc:2499, doc:2497, doc:2496, doc:5334, doc:2491, doc:5423, doc:4431 | 'isolated microVM environments for running coding agents safely' (semantic): not in the top 8: doc:2511, doc:2495 |
+
+## Deterministic guardrails
+
+The no-LLM checks between the models and the reader: the verbatim-quote match, the number guard, the citation enum of the stage-B schema and the inline-marker cleaner. Genuine inputs (real verified quotes and facts) must pass; planted attacks (fabricated or paraphrased quotes, altered or invented numbers, citations to unseen sources, inline markers) must be caught.
+
+Cases: 58, scored: 58, not recorded: 0. Labels: real verified quotes and numbers, with planted attacks.
+
+| Metric | Value |
+|---|---|
+| Catch rate | 100.0% (37/37) |
+| False-alarm rate | 0.0% (0/21) |
+
+| Breakdown | Cases | Metrics |
+|---|---|---|
+| quote_genuine | 10 | Passed 100.0% (10/10) |
+| quote_fabricated | 5 | Caught 100.0% (5/5) |
+| quote_paraphrased | 5 | Caught 100.0% (5/5) |
+| quote_altered_number | 5 | Caught 100.0% (5/5) |
+| number_genuine | 6 | Passed 100.0% (6/6) |
+| number_altered | 5 | Caught 100.0% (5/5) |
+| number_absent | 6 | Caught 100.0% (6/6) |
+| citation_shown | 2 | Passed 100.0% (2/2) |
+| citation_unshown | 4 | Caught 100.0% (4/4) |
+| marker_present | 7 | Caught 100.0% (7/7) |
+| marker_absent | 3 | Passed 100.0% (3/3) |
+
+## Stage-B fact-checker
+
+Stage B's model checker (the smart model since the experiments), which deletes claims their cited sources do not support. 30 claims over real excerpts, 16 with a planted error. Unsupported recall is the share of planted errors it removes; false removal is the share of true claims it deletes (lost content, since the check fails closed).
+
+Cases: 30, scored: 30, not recorded: 0. Labels: claims written against real excerpts, with planted errors.
+
+| Metric | Value |
+|---|---|
+| Unsupported claims removed | 100.0% (16/16) |
+| Supported claims removed | 0.0% (0/14) |
+| Accuracy | 100.0% (30/30) |
+
+| Breakdown | Cases | Metrics |
+|---|---|---|
+| contradiction | 1 | Removed 100.0% (1/1) |
+| derived_number | 1 | Removed 100.0% (1/1) |
+| not_in_source | 2 | Removed 100.0% (2/2) |
+| overstated_scope | 5 | Removed 100.0% (5/5) |
+| wrong_company | 2 | Removed 100.0% (2/2) |
+| wrong_number | 4 | Removed 100.0% (4/4) |
+| wrong_source | 1 | Removed 100.0% (1/1) |
+| supported | 14 | Kept 100.0% (14/14) |
+
+## Faithfulness of stored analyses
+
+Every factual item of 20 real stored stage-B analyses, rated by an independent LLM judge (the smart model, its own prompt) against the passages of its cited sources that best match it, taken from the text the stage-B writer was shown (about 2,000 characters per item), plus a deterministic check that every citation resolves to a source the analysis had. The judge is a model too.
+
+Cases: 137, scored: 137, not recorded: 0. Labels: rated by a separate judge model; frozen export of stored analyses.
+
+| Metric | Value |
+|---|---|
+| Supported | 56.9% (78/137) |
+| Partially supported | 40.9% (56/137) |
+| Unsupported | 2.2% (3/137) |
+| Items whose citations all resolve | 100.0% (137/137) |
+| Citations that resolve | 100.0% (219/219) |
+| Items the judge left unrated | 0.0% (0/137) |
+| Item words in the cited text the writer saw that the judge also sees | 97.1% (2376/2448) |
+
+| Breakdown | Cases | Metrics |
+|---|---|---|
+| summary | 20 | Supported 30.0% (6/20) |
+| what_happened | 43 | Supported 69.8% (30/43) |
+| background | 6 | Supported 100.0% (6/6) |
+| what_changed | 12 | Supported 58.3% (7/12) |
+| jfrog_impact | 30 | Supported 43.3% (13/30) |
+| competitive_implications | 9 | Supported 55.6% (5/9) |
+| risks_opportunities | 11 | Supported 63.6% (7/11) |
+| what_to_watch | 6 | Supported 66.7% (4/6) |
+
+Failures (59):
+
+| Case | Expected | Got | Detail |
+|---|---|---|---|
+| analysis-88/S2 | supported | partial | judge: Coffee-cart invitation is absent, and the passage mentions GitHub Actions as implementation rather than clearly describing a security talk. \| what_happened, cites doc:5274: 'Cloudsmith’s recommended sessions include talks about npm dependency provenance, GitHub Actions security, and fine-grained authorization for hosted MCP servers. The company says it will be in the Fest' |
+| analysis-91/S4 | supported | partial | judge: The passages support overlapping package blocking and the coverage comparison; they do not explicitly characterize Curation’s coverage as broader than GitHub’s. \| impact on JFrog Curation, cites doc:5317, kb:4: 'GitHub’s firewall overlaps with Curation’s upstream package blocking, but its current npm-only support is narrower than Curation’s stated coverage of open-source packages, AI models |
+| analysis-92/S1 | supported | partial | judge: The launch details are supported, but the claim that GitLab is a more direct enterprise competitor is an added inference. \| summary, cites doc:5313, kb:9, kb:6: 'On October 20, 2026, GitLab announced a beta AI Governance Dashboard for GitLab Premium and Ultimate customers, bringing GitLab Duo and externally connected coding-agent activity into a group-level vi' |
+| analysis-92/S4 | supported | partial | judge: The passages say setup instructions capture Cursor and Codex sessions, but do not establish that they cover Claude Code. \| what_happened, cites doc:5313: 'The dashboard is in beta for GitLab Premium and Ultimate customers and is enabled at the top-level group. GitLab’s setup instructions cover Claude Code and provide a separate command to capture Cursor' |
+| analysis-92/S7 | supported | partial | judge: The product capabilities are supported; the claim that GitLab may compete for governance attention is an inference. \| impact on JFrog AppTrust, cites doc:5313, kb:6: 'GitLab’s session-level audit evidence may compete for governance attention, while AppTrust captures agent interactions as signed evidence evaluated across the release lifecycle.' |
+| analysis-93/S9 | supported | partial | judge: This is a forecast about perceived need, not a sourced fact; the passages establish opt-in behavior but do not establish that teams will view the check as sufficient. \| risks_opportunities risk, cites doc:5322, kb:4: 'Rust teams may treat Cargo’s native age check as sufficient for covered dependencies, reducing the perceived need for a separate package-age control.' |
+| analysis-94/S1 | supported | partial | judge: The date, early-access audience, repository scope, and pattern-based-scanner framing are stated; merge-request scanning is not established in this passage. \| summary, cites doc:5312: 'On October 20, 2026, GitLab announced Business Logic Security Analyzer, an early-access capability for a small group of GitLab Ultimate customers on GitLab.com. It scans whole repositories and merge r' |
+| analysis-94/S6 | supported | partial | judge: The source supports unified source, pipelines, findings, and gating policies, plus early access; it does not state the pitch targets Ultimate customers evaluating this use case. \| competitive_implications, cites doc:5312: 'GitLab’s pitch links source code, pipelines, findings, and release policies in one system, and places the analyzer’s findings in its existing security reports. That gives |
+| analysis-94/S7 | supported | partial | judge: Early access and report integration are shown, but validation and expanded availability are hypothetical conditions, not source-established developments. \| risks_opportunities risk, cites doc:5312: 'If GitLab validates the analyzer with early-access customers and expands availability, its integration into GitLab security reports could strengthen its platform-consolidation pitch against adja |
+| analysis-94/S8 | supported | unsupported | judge: The source mentions participants running scans, but not an announced evaluation or reporting accuracy, false positives, or additional flaw types. \| what_to_watch, cites doc:5312: 'GitLab’s announced evaluation of early-access scans with participating teams, including whether it reports accuracy, false positives, or additional supported business-logic flaw types.' |
+| analysis-95/S3 | supported | partial | judge: The passages say budgets run in the Cost Management Agent but do not explicitly connect that to the cloud-spend policy engine. \| what_happened, cites doc:5319: 'Harness says its Cost Management Agent attributes cloud, AI, and engineering spend, and AI Budgets uses that agent’s data across major AI providers. Harness also says budgets use the same policy engin' |
+| analysis-95/S9 | supported | partial | judge: The cited Harness passage says the shared engine reaches the Software Delivery Agent, but does not state that it gates delivery. \| competitive_implications, cites doc:5319, kb:9, kb:4: 'Harness is extending its FinOps policy engine into AI usage and describing a path from cost measurement to access restrictions and delivery gating. This may appeal to organizations that want AI spend ' |
+| analysis-96/S1 | supported | partial | judge: The source supports the date, Preview availability, cluster types, and automated management; competitive pressure on JFrog Runtime is not stated. \| summary, cites doc:5334: 'On October 20, 2026, Wiz and Google Cloud announced the Wiz Runtime Sensor add-on for GKE, available in Preview for GKE Standard and Autopilot clusters. It automates sensor deployment, credential mana' |
+| analysis-96/S4 | supported | partial | judge: The source supports Preview and automated deployment and credential management, but does not explicitly say teams no longer have to manage credentials themselves. \| what_changed, cites doc:5334: 'Wiz runtime protection is now offered as a GKE-managed add-on in Preview, rather than requiring teams to manage third-party sensor deployment and credentials themselves.' |
+| analysis-96/S5 | supported | unsupported | judge: The source says deployment complexity is reduced, but does not mention JFrog Runtime or establish a challenge to its production-security position. \| impact on JFrog Runtime, cites doc:5334: 'For GKE customers, the managed add-on lowers the operational burden of enabling runtime threat detection, challenging JFrog Runtime’s position for production security in those environments.' |
+| analysis-96/S6 | supported | partial | judge: The source describes Cloud Run and virtual machines as future work, but does not mention general availability as a possible announcement. \| what_to_watch, cites doc:5334: 'Whether Google Cloud and Wiz announce general availability or extend the add-on to Google Cloud Run and virtual machines, which they describe as future work.' |
+| analysis-97/S1 | supported | partial | judge: The passages support the playbook and its date, but do not show it guiding teams on release approvals or establish AppTrust as specifically release governance. \| summary, cites doc:5311, kb:6: 'GitLab published its AI-Native Engineering Playbook on October 20, 2026, offering guidance for redesigning delivery processes around AI agents, including how to scale autonomy while maintaining revie |
+| analysis-97/S5 | supported | partial | judge: The passages support process guidance and no product-feature launch, but do not establish guidance on release control. \| what_changed, cites doc:5311: 'GitLab has now published process guidance that addresses how engineering teams should adapt review, validation and release control to agent-driven code output; the announcement does not identify a new' |
+| analysis-97/S6 | supported | partial | judge: The passages support governance, verification, and AppTrust policy gates, but do not say those gates use release evidence. \| impact on JFrog AppTrust, cites doc:5311, kb:6: 'GitLab’s playbook addresses governance and verification around AI-generated software, while JFrog AppTrust enforces policy gates across the SDLC using release evidence; the playbook is guidance rather' |
+| analysis-98/S1 | supported | partial | judge: The incident and JFrog distribution capabilities are described, but the cited JFrog passages do not state that artifact governance addresses this particular update-configuration and execution risk. \| summary, cites doc:5382, kb:4, kb:5: 'SecurityWeek reported on October 20, 2026, that attackers tampered with AOMEI Backupper’s update infrastructure multiple times between April and July, brie |
+| analysis-98/S3 | supported | partial | judge: The passage supports CrossRoad, ShinyRoad, modified Radmin Server with a malicious DLL, affected sectors and opportunistic impact; it names Adaptix C2 and AdaptAgent, not AdaptAgent as a payload alongside the other listed payloads in the stated way. \| what_happened, cites doc:5382: 'The reported payloads included CrossRoad, a modified Radmin Server with a malicious DLL, ShinyRoad, and Adapt |
+| analysis-98/S4 | supported | partial | judge: Supported except the passage does not specify that the configuration files belong to the promotional-content channel; it describes content paths and unauthenticated configuration files without that linkage. \| what_happened, cites doc:5382: 'ManageEngine reportedly notified AOMEI in early June, and Google Cloud notified the company again in mid-July; AOMEI said in late July that it had taken |
+| analysis-98/S7 | supported | partial | judge: The passage supports the channel, checksum/configuration issue, payload stages, and late-July corrective actions; it does not substantiate the specific October 20 publication framing. \| what_changed, cites doc:5382: 'The October 20 SecurityWeek account adds technical detail about the promotional-content channel, the configuration and checksum trust problem, and the malware stages; it also r |
+| analysis-98/S8 | supported | partial | judge: Curation’s point-of-request screening and blocking are supported, but the sources do not establish that this AOMEI content would be a third-party component Curation vets or blocks. \| impact on JFrog Curation, cites doc:5382, kb:4: 'The incident gives sellers a concrete example of malicious content entering through a trusted delivery path, while Curation vets third-party components at reques |
+| analysis-98/S9 | supported | partial | judge: The Distribution capabilities are stated, but the claim that the incident makes trusted delivery relevant to customer discussions is advice/inference rather than a reported fact. \| impact on JFrog Distribution, cites doc:5382, kb:5: 'The incident makes trusted delivery relevant to customer discussions, and JFrog Distribution packages and orchestrates software releases across remote sites, c |
+| analysis-98/S10 | supported | partial | judge: The cited Artifactory passage only describes manual uploads and pipeline resolution/deployment; it does not support immutable release context, tracking, auditing, or attestation. \| impact on JFrog Artifactory, cites doc:5382, kb:1: 'The report highlights the value of artifact integrity and release context, while Artifactory supports immutable release context, tracking, auditing, and attesta |
+| analysis-98/S11 | supported | partial | judge: The cited passages establish an AOMEI update-infrastructure compromise and JFrog capabilities, but do not establish the broader claim about dependency security leaving delivery-path risks uncovered. \| competitive_implications, cites doc:5382, kb:4, kb:5: 'This is not a direct competitor move or evidence of a JFrog product gap: the report describes a compromise of AOMEI’s own update infrastr |
+| analysis-98/S12 | supported | partial | judge: The incident’s unauthenticated configuration/checksum arrangement is supported, but the cited Artifactory passage does not substantiate release-evidence capabilities; the no-prevention caveat is also not established by these passages. \| risks_opportunities opportunity, cites doc:5382, kb:4, kb:1: 'Use the reported unauthenticated update configuration and checksum arrangement to make Curatio |
+| analysis-99/S4 | supported | partial | judge: The product descriptions are supported, but the passages do not establish that the post gives no pricing or availability details. \| what_happened, cites doc:5327: 'Sonatype also describes Sonatype Guide as helping developers and AI agents assess components in context, choose safer versions, and address risk with guided fixes. The post positions Nexus Repository ' |
+| analysis-99/S8 | supported | unsupported | judge: The passages do not establish Artifactory’s role proxying public registries or AI model hubs. \| impact on JFrog Artifactory, cites doc:5327, kb:1: 'Sonatype’s pitch around serving components through a trusted repository path is relevant to Artifactory’s role proxying public registries and AI model hubs, but the post does not establish a direct Ar' |
+| analysis-100/S1 | supported | partial | judge: The harness rollout and JFrog’s approved-asset governance are stated, but tighter coupling and developer-level controls being in the same conversation are interpretive framing. \| summary, cites doc:5424, kb:9: 'On October 20, 2026, Microsoft said it is progressively making the GitHub Copilot harness the default for new sessions in VS Code, alongside enterprise controls for agent sandboxing  |
+| analysis-100/S2 | supported | partial | judge: The passages support progressive default rollout and use of the Copilot SDK and Agent Host, but do not say the harness was previously available through the picker. \| what_happened, cites doc:5424: 'VS Code’s release says the Copilot harness, previously available through the harness picker, is being progressively rolled out as the default for new sessions. Microsoft describes the harness as  |
+| analysis-100/S4 | supported | partial | judge: The passages state progressive rollout as the default for new sessions; they do not establish that it was previously an option in the picker. \| what_changed, cites doc:5424: 'The Copilot harness is moving from an option in the harness picker to the progressively rolled-out default for new VS Code sessions; the source does not specify a completion date for the rollout.' |
+| analysis-100/S5 | supported | partial | judge: JFrog’s authenticated bridge is supported, but the cited VS Code passage does not state that its controls govern permission modes; only sandboxing is referenced there. \| impact on JFrog AI Catalog, cites doc:5424, kb:9: 'VS Code’s controls govern agent sandboxing and permission modes, while JFrog AI Catalog’s Agent Guard routes coding agents through an authenticated bridge to validate reque |
+| analysis-101/S1 | supported | partial | judge: The date and Copilot surfaces are stated; the listed Azure DevOps content and the comparison to JFrog capabilities are not fully established by these passages. \| summary, cites doc:5351: 'On October 20, 2026, Microsoft made its Azure DevOps Plugin available in Copilot Chat, Cowork, and Code, bringing Azure DevOps projects, work items, pull requests, test plans, and pipelines into Copil' |
+| analysis-101/S2 | supported | partial | judge: The passage supports working with the listed Azure DevOps items and triaging bugs and structuring backlogs, but does not mention identifying backlog priorities. \| what_happened, cites doc:5351: 'The plugin lets users work with Azure DevOps projects, work items, pull requests, test plans, and pipelines from Copilot. Microsoft says built-in skills can help users triage bugs, identify backlog  |
+| analysis-101/S4 | supported | partial | judge: Artifactory’s Azure DevOps integration and agent package routing are stated, but governed artifact access is not explicitly tied to that routing; the announcement’s omission is supported. \| impact on JFrog Artifactory, cites doc:5351, kb:1: 'The plugin brings Azure DevOps tasks into Copilot, while Artifactory integrates with Azure DevOps and supports routing AI coding agents through governe |
+| analysis-102/S1 | supported | partial | judge: The announcement supports the date and bulk conversion details; the comparison to AppTrust’s positioning is grounded in the KB, but the claims that the announcement does not describe changes to artifact storage or supply-chain security are not established by these passages. \| summary, cites doc:5314, kb:6: 'GitHub announced on October 20, 2026, that repository administrators can convert all |
+| analysis-103/S1 | supported | partial | judge: Date and four-level, two-track model are supported; the self-assessment/build-or-buy framing and JFrog governance claims are supported. The buyer-expectations inference is plausible but not stated. \| summary, cites doc:5348, kb:9, kb:4: 'Endor Labs published an AI AppSec maturity playbook on October 20, 2026, with a four-level model covering both security of AI-generated code and AI used fo |
+| analysis-103/S3 | supported | partial | judge: The passage includes the 90-day plan and trade-offs. It describes them as playbook sections, but does not explicitly establish the contrast with announced product capabilities. \| what_happened, cites doc:5348: 'Endor Labs also outlines a first-90-days plan and discusses trade-offs including maintenance, lock-in, and erosion of team skills. The source presents these as guidance for teams ado |
+| analysis-106/S1 | supported | partial | judge: FairStress’s purpose and Olmo-eval integration are stated, but the passage does not explicitly describe demographic fairness or JFrog AI Catalog governance and scanning. \| summary, cites doc:5329, kb:9: 'Hugging Face introduced FairStress on October 20, 2026, a downloadable benchmark for assessing demographic fairness and decision stability in LLMs, and says it is building the benchmark int |
+| analysis-106/S2 | supported | partial | judge: The passages support the benchmark design and all stated counts, but do not say the 50K subset is intended to reduce evaluation cost. \| what_happened, cites doc:5329: 'FairStress measures whether demographic identity affects a model’s decisions and whether matched persuasive arguments cause it to change a decision differently depending on which demographic group ben' |
+| analysis-106/S5 | supported | partial | judge: The sources support model-behavior evaluation and asset discovery/scanning, but do not state policy governance or that the benchmark does not establish direct product overlap. \| impact on JFrog AI Catalog, cites doc:5329, kb:9: 'FairStress evaluates model decision behavior, whereas JFrog AI Catalog discovers, scans, and governs AI assets; the benchmark may complement those controls but does |
+| analysis-106/S6 | supported | partial | judge: FairStress’s downloadable status is shown in S6’s passages only indirectly? No: those passages do not state download availability; they also do not explicitly support the claimed evaluation-layer framing. \| competitive_implications, cites doc:5329, kb:9: 'FairStress gives model developers and evaluators a downloadable way to test demographic decision stability, while JFrog’s stated AI Catal |
+| analysis-107/S1 | supported | partial | judge: The passages support the date, agencies, stages, and product-governance comparison, but do not show that the practices address monitoring or that the article calls them no new information. \| summary, cites doc:5381, kb:9, kb:4, kb:10, kb:6: 'On October 20, 2026, SecurityWeek reported that NIST, the NSA, and CISA published ten incident-readiness and response practices for AI agents, organize |
+| analysis-107/S4 | supported | partial | judge: Recovery and reporting details and the single-target framing are in the passage; it says report publicly and widely, not that public sharing is only where appropriate. \| what_happened, cites doc:5381: 'Recovery calls for testing restoration procedures in advance and documenting decisions and residual risk. Reporting covers notification to affected parties and, where required, government rep |
+| analysis-107/S6 | supported | partial | judge: The passages support the alignment to inventories, least privilege, and shadow-AI visibility, but do not establish AI Catalog’s approved-asset governance. \| impact on JFrog AI Catalog, cites doc:5381, kb:9: 'The checklist’s emphasis on agent asset inventories, least privilege, and monitoring aligns with AI Catalog’s approved-asset governance and visibility into unmanaged AI use, although th |
+| analysis-107/S8 | supported | partial | judge: Recovery and reporting practices are described, but the passages do not connect documentation to AppTrust or support its evidence-backed release governance. \| impact on JFrog AppTrust, cites doc:5381, kb:6: 'The report’s recovery, documentation, and reporting practices are adjacent to AppTrust’s evidence-backed release governance, but the article does not assess AppTrust or prescribe its ap |
+| analysis-107/S9 | supported | partial | judge: The product and checklist facts support a possible discovery-conversation opportunity; seller timing and buyers’ implementation choices are not stated. \| risks_opportunities opportunity, cites doc:5381, kb:9, kb:10: 'The checklist gives JFrog sellers a timely, government-agency reference for discovery conversations about agent inventories, access controls, and supply-chain risk, while leavi |
+| analysis-108/S1 | supported | partial | judge: The API change is supported; Xray’s scanning is supported, but the passages do not establish that this change may reduce friction specifically for JFrog customers or workflows alongside Xray. \| summary, cites doc:5316, kb:2: 'On October 20, 2026, GitHub added a `version_requirement` field to Dependabot alert API responses and webhook payloads, giving alert consumers the dependency version o |
+| analysis-108/S4 | supported | partial | judge: The passages support importing alerts into security tools and Xray’s stated scan targets, but do not establish that Xray scans repositories, build packages, and container images specifically for vulnerabilities. \| impact on JFrog Xray, cites doc:5316, kb:2: 'The field may simplify importing Dependabot alert data into security tools, while Xray scans repositories, build packages, and contain |
+| analysis-110/S1 | supported | partial | judge: The campaign and its context/evidence/economics pitch are stated, but the passages do not establish a comparison with JFrog’s contextual analysis or release governance. \| summary, cites doc:5350, kb:6: 'On October 20, 2026, Endor Labs launched its Harness Your Mechs campaign and a resource kit arguing that enterprises should buy security context, finding verification, evidence, and predicta |
+| analysis-110/S2 | supported | partial | judge: The kit’s contents and build-versus-buy recommendation are stated; the more specific framing as spanning review, release, and remediation is not established as the kit’s architecture scope. \| what_happened, cites doc:5350: 'Endor Labs’ resource kit includes a playbook, research, and an ROI calculator for architecting security across the agentic SDLC, from code generation through review, rel |
+| analysis-110/S3 | supported | partial | judge: The passage confirms the cost-not-accuracy distinction, precomputed evidence cost, and marginal cost per question; it does not call this a token-cost benchmark or mention a calculator supporting the benchmark. \| what_happened, cites doc:5350: 'Endor Labs supports the argument with its own token-cost benchmark and calculator, and explicitly says the benchmark measures cost rather than accura |
+| analysis-110/S4 | supported | partial | judge: The campaign and resource kit are stated, but the passages do not establish that these were added to prior messaging or that the prior signal described a maturity playbook and framework. \| what_changed, cites doc:5350, signal:291: 'Endor Labs has added a build-versus-buy campaign and resource kit to its AI AppSec messaging; the prior signal described a maturity playbook and framework, rathe |
+| analysis-110/S5 | supported | partial | judge: The source supports buying precomputed context and verification, but the cited JFrog passage only says the platform provides integrated security solutions; it does not establish contextual vulnerability analysis by Advanced Security. \| impact on JFrog Advanced Security, cites doc:5350, kb:1: 'Endor Labs frames precomputed security context and finding verification as capabilities enterprises |
+| analysis-111/S1 | supported | partial | judge: The article supports the model and early governance/education; the passages do not establish that it focuses on governing AI assets or agent activity. \| summary, cites doc:5383, kb:9, kb:6: 'In an October 20, 2026 article, SecurityWeek lays out an eight-stage model from AI-assisted to autonomous agentic development and argues organizations should establish governance and developer educati' |
+| analysis-111/S4 | supported | partial | judge: The cited passages support shadow-AI visibility and blocking, but not the claim that the article’s concern specifically aligns with those AI Catalog capabilities. \| impact on JFrog AI Catalog, cites doc:5383, kb:9: 'The article’s concern about visibility and control as developers adopt AI agents aligns with AI Catalog’s stated ability to expose shadow AI and block unapproved AI assets, thou |
+| analysis-111/S5 | supported | partial | judge: The passages support governance and policy gates, but do not state that AppTrust provides evidence specifically for human- and AI-written releases. \| impact on JFrog AppTrust, cites doc:5383, kb:6: 'The article’s call for governance as AI-generated development becomes more autonomous aligns with AppTrust’s stated policy gates and evidence for human- and AI-written software releases.' |

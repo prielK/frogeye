@@ -1,0 +1,55 @@
+{
+  "jobs": [
+    {
+      "absolute_url": "https://job-boards.greenhouse.io/acmesec/jobs/4012345",
+      "data_compliance": [
+        {"type": "gdpr", "requires_consent": false, "requires_processing_consent": false, "requires_retention_consent": false, "retention_period": null}
+      ],
+      "internal_job_id": 2201001,
+      "location": {"name": "Tel Aviv, Israel"},
+      "metadata": null,
+      "id": 4012345,
+      "updated_at": "2026-10-01T10:12:44-04:00",
+      "requisition_id": "ENG-104",
+      "title": "Senior Software Engineer, Supply Chain",
+      "first_published": "2026-09-01T09:15:00-04:00",
+      "language": "en",
+      "content": "&lt;p&gt;&lt;strong&gt;About Acmesec&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Acmesec protects the software supply chain for engineering teams of every size.&lt;/p&gt;\n&lt;h3&gt;What you will do&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;Build scanners for npm &amp;amp; PyPI packages&lt;/li&gt;\n&lt;li&gt;Design artifact provenance services&lt;br&gt;used by thousands of pipelines&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;We offer a hybrid schedule from our Tel Aviv office.&lt;/p&gt;",
+      "departments": [{"id": 77001, "name": "R&D", "child_ids": [], "parent_id": null}],
+      "offices": [{"id": 88001, "name": "Tel Aviv", "location": "Tel Aviv, Israel", "child_ids": [], "parent_id": null}]
+    },
+    {
+      "absolute_url": "https://job-boards.greenhouse.io/acmesec/jobs/4012346",
+      "data_compliance": [],
+      "internal_job_id": 2201002,
+      "location": {"name": "Remote - US"},
+      "metadata": null,
+      "id": 4012346,
+      "updated_at": "2026-10-03T08:00:00-04:00",
+      "requisition_id": "SEC-017",
+      "title": "Staff Security Researcher",
+      "first_published": "2026-09-10T11:00:00-04:00",
+      "language": "en",
+      "content": "&lt;p&gt;Join the Acmesec research team hunting malicious packages before they reach production.&lt;/p&gt;\n&lt;p&gt;You will publish advisories and build detection rules.&lt;/p&gt;",
+      "departments": [{"id": 77002, "name": "Research", "child_ids": [], "parent_id": null}],
+      "offices": [{"id": 88002, "name": "Remote", "location": null, "child_ids": [], "parent_id": null}]
+    },
+    {
+      "absolute_url": "https://job-boards.greenhouse.io/acmesec/jobs/4012347",
+      "data_compliance": [],
+      "internal_job_id": 2201003,
+      "location": {"name": "London, United Kingdom"},
+      "metadata": null,
+      "id": 4012347,
+      "updated_at": "2026-10-05T09:30:00+01:00",
+      "requisition_id": "SAL-221",
+      "title": "Account Executive, EMEA",
+      "first_published": null,
+      "language": "en",
+      "content": "&lt;p&gt;Acmesec is hiring an Account Executive to grow enterprise accounts across EMEA.&lt;/p&gt;",
+      "departments": [{"id": 77003, "name": "Sales", "child_ids": [], "parent_id": null}],
+      "offices": [{"id": 88003, "name": "London", "location": "London, United Kingdom", "child_ids": [], "parent_id": null}]
+    }
+  ],
+  "meta": {"total": 3}
+}

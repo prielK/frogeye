@@ -1,0 +1,103 @@
+rss:
+  # robots.txt disallows */feed; feeds are fetched as a feed reader would (robots ignored for feeds)
+  # no feed about JFrog itself (the JFrog Blog row was removed; the loader skips self too)
+  - {name: GitHub Changelog, url: https://github.blog/changelog/feed/, competitor: github, config: {auto_pass: false}}
+  - {name: GitHub Changelog AppSec, url: https://github.blog/changelog/label/application-security/feed/, competitor: github}
+  - {name: GitLab Releases, url: "https://gitlab.com/gitlab-org/gitlab/-/tags?format=atom", competitor: gitlab}  # all-releases.xml is 3.7 MB (> 2 MB body cap); tags atom lists release tags
+  - {name: GitLab Blog, url: https://about.gitlab.com/atom.xml, competitor: gitlab}
+  - {name: Sonatype Blog, url: https://www.sonatype.com/blog/rss.xml, competitor: sonatype}
+  - {name: Sonatype Press, url: https://www.sonatype.com/press-releases/rss.xml, competitor: sonatype}
+  - {name: Cloudsmith Blog, url: https://cloudsmith.com/rss/blog.xml, competitor: cloudsmith}
+  - {name: Harness Blog, url: https://www.harness.io/blog/rss.xml, competitor: harness}
+  - {name: Docker Blog, url: https://www.docker.com/blog/feed/, competitor: docker}
+  - {name: Chainguard Unchained, url: https://www.chainguard.dev/unchained/rss.xml, competitor: chainguard}
+  - {name: Snyk Blog, url: https://snyk.io/blog/feed/, competitor: snyk}
+  - {name: Endor Labs Blog, url: https://endorlabs.com/blog/rss.xml, competitor: endor-labs}
+  - {name: Socket Blog, url: https://socket.dev/api/blog/feed.atom, competitor: socket}
+  - {name: Wiz Blog, url: https://www.wiz.io/feed/rss.xml, competitor: wiz}
+  - {name: Mend Blog, url: https://www.mend.io/feed/, competitor: mend}
+  - {name: Veracode Blog, url: https://www.veracode.com/blog/feed/, competitor: veracode, enabled: false}  # reason: /blog/feed/ is the comments feed (0 posts); veracode.com exposes no post feed
+  - {name: Anchore Blog, url: https://anchore.com/feed/, competitor: anchore}
+  - {name: Hugging Face Blog, url: https://huggingface.co/blog/feed.xml, competitor: hugging-face}
+  - {name: AWS What's New, url: https://aws.amazon.com/about-aws/whats-new/recent/feed/, competitor: aws, config: {auto_pass: false}}
+  - {name: AWS DevOps Blog, url: https://aws.amazon.com/blogs/devops/feed/, competitor: aws, config: {auto_pass: false}}
+  - {name: Azure Updates, url: https://www.microsoft.com/releasecommunications/api/v2/azure/rss, competitor: azure, config: {auto_pass: false}}
+  - {name: Azure DevOps Blog, url: https://devblogs.microsoft.com/devops/feed/, competitor: azure}
+  - {name: GCP Artifact Registry Notes, url: https://cloud.google.com/feeds/artifactregistry-release-notes.xml, competitor: google-cloud}
+  # Checkmarx/Aqua/Black Duck Blog: bot-blocking site; fetched once daily with a browser UA (user's low-footprint profile)
+  - {name: Checkmarx Blog, url: https://checkmarx.com/feed/, competitor: checkmarx, config: {browser_ua: true}}
+  - {name: Aqua Blog, url: https://www.aquasec.com/feed/, competitor: aqua, config: {browser_ua: true}}
+  - {name: Black Duck Blog, url: https://www.blackduck.com/feed, competitor: black-duck, config: {browser_ua: true}}  # blog.rss 404s; site-wide /feed
+industry_rss:   # reliability B, competitor null; URLs to be confirmed
+  - {name: OpenSSF Blog, url: https://openssf.org/feed/}
+  - {name: CNCF Blog, url: https://www.cncf.io/announcements/feed/}  # /feed/ is 2.7 MB (> 2 MB body cap); announcements feed is 112 KB
+  - {name: The New Stack, url: https://thenewstack.io/feed/}
+  - {name: InfoQ, url: https://feed.infoq.com/}
+  - {name: DevOps.com, url: https://devops.com/feed/, enabled: false}  # reason: Cloudflare bot challenge (HTTP 403) blocks all non-browser fetches
+  - {name: SecurityWeek, url: https://www.securityweek.com/feed/}
+  - {name: BleepingComputer, url: https://www.bleepingcomputer.com/feed/}
+github_repos:   # each → github_releases source https://api.github.com/repos/{repo}/releases (A) + github_repo_stats source
+  - {repo: jfrog/jfrog-cli, competitor: jfrog}  # self: github_repo_stats only (metrics); no releases
+  - {repo: aquasecurity/trivy, competitor: aqua}
+  - {repo: anchore/syft, competitor: anchore}
+  - {repo: anchore/grype, competitor: anchore}
+  - {repo: sonatype/nexus-public, competitor: sonatype}
+  - {repo: SocketDev/socket-cli, competitor: socket}
+  - {repo: snyk/cli, competitor: snyk}
+  - {repo: harness/harness, competitor: harness}
+  - {repo: docker/scout-cli, competitor: docker}
+  - {repo: chainguard-dev/apko, competitor: chainguard}
+# SEC requires a declared contact in the User-Agent; disabled (no contact info by user choice)
+edgar:          # reliability A; GitLab CIK 0001653482 confirmed on EDGAR
+  - {competitor: jfrog, cik: "0001800667", enabled: false}
+  - {competitor: gitlab, cik: "0001653482", enabled: false}
+generated:      # one source per competitor with tier in [0,1,2] except self (17 competitors)
+  # Search results only *mention* a competitor, so these never auto-pass the prefilter
+  # (the loader sets auto_pass: false): an item must name the competitor to be tagged.
+  google_news: {reliability: C, config: {days: 2}}
+  gdelt: {reliability: B, config: {timespan: 1d}}
+  hn: {reliability: C, config: {}}
+# Public job boards. Discovery finds them live and records them as sources:
+#   python -m app.cli.discover_job_boards [--competitor SLUG] [--dry-run]
+# A row here pins or overrides one: {competitor: SLUG, ats: greenhouse|lever|ashby, token: TOKEN}
+# (optional `enabled: false`). None are pinned: no board token here has been checked live.
+job_boards: []
+# Watched company pages (page_watch): tier 1-2 competitors only, never the self one.
+# {competitor, page: pricing|about|careers, url}. Only URLs believed to exist are listed (a
+# page we are unsure of is left out); hyperscalers and giants whose site is not about this
+# market get just the pricing page of the competing registry product. The acceptance run checks
+# reachability live and disables dead ones. Fetched once a day, robots.txt respected.
+pages:
+  - {competitor: sonatype, page: pricing, url: "https://www.sonatype.com/products/pricing"}
+  - {competitor: github, page: pricing, url: "https://github.com/pricing"}
+  - {competitor: gitlab, page: pricing, url: "https://about.gitlab.com/pricing/"}
+  - {competitor: gitlab, page: about, url: "https://about.gitlab.com/company/"}
+  - {competitor: gitlab, page: careers, url: "https://about.gitlab.com/jobs/"}
+  - {competitor: cloudsmith, page: pricing, url: "https://cloudsmith.com/pricing"}
+  - {competitor: snyk, page: pricing, url: "https://snyk.io/plans/"}
+  - {competitor: snyk, page: about, url: "https://snyk.io/about/"}
+  - {competitor: snyk, page: careers, url: "https://snyk.io/careers/"}
+  - {competitor: harness, page: pricing, url: "https://www.harness.io/pricing"}
+  - {competitor: harness, page: about, url: "https://www.harness.io/company/about-us"}
+  - {competitor: harness, page: careers, url: "https://www.harness.io/company/careers"}
+  - {competitor: aws, page: pricing, url: "https://aws.amazon.com/ecr/pricing/"}
+  - {competitor: azure, page: pricing, url: "https://azure.microsoft.com/en-us/pricing/details/container-registry/"}
+  - {competitor: google-cloud, page: pricing, url: "https://cloud.google.com/artifact-registry/pricing"}
+  - {competitor: docker, page: pricing, url: "https://www.docker.com/pricing/"}
+  - {competitor: docker, page: about, url: "https://www.docker.com/company/"}
+  - {competitor: docker, page: careers, url: "https://www.docker.com/careers/"}
+  - {competitor: chainguard, page: pricing, url: "https://www.chainguard.dev/pricing"}
+  - {competitor: chainguard, page: about, url: "https://www.chainguard.dev/about"}
+  - {competitor: chainguard, page: careers, url: "https://www.chainguard.dev/careers"}
+  - {competitor: black-duck, page: about, url: "https://www.blackduck.com/company/about-us.html"}
+  - {competitor: black-duck, page: careers, url: "https://www.blackduck.com/company/careers.html"}
+  - {competitor: aqua, page: pricing, url: "https://www.aquasec.com/pricing/"}
+  - {competitor: aqua, page: about, url: "https://www.aquasec.com/about-us/"}
+  - {competitor: aqua, page: careers, url: "https://www.aquasec.com/careers/"}
+  - {competitor: socket, page: pricing, url: "https://socket.dev/pricing"}
+  - {competitor: socket, page: about, url: "https://socket.dev/about"}
+  - {competitor: endor-labs, page: pricing, url: "https://www.endorlabs.com/pricing"}
+  - {competitor: endor-labs, page: careers, url: "https://www.endorlabs.com/careers"}
+  - {competitor: checkmarx, page: careers, url: "https://checkmarx.com/careers/"}
+  - {competitor: mend, page: pricing, url: "https://www.mend.io/pricing/"}
+  - {competitor: mend, page: careers, url: "https://www.mend.io/careers/"}

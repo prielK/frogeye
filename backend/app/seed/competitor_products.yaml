@@ -1,0 +1,117 @@
+# Competitor products vs JFrog: each tier 1-2 competitor's main products that
+# compete with a JFrog product, with a category, a public source URL and the JFrog counterparts
+# (names from app.agents.analysis_schema.JFROG_PRODUCTS). Curated and conservative: only
+# products the vendor's own public page describes, mapped to the JFrog product a buyer would
+# weigh them against. No market-share, revenue or other figures here; those come only from
+# verified, quoted facts. Never the self competitor. Each URL was checked live on
+# 2026-10-20 (socket.dev blocks automated readers; it is the vendor's public home page).
+# The seed owns the table: a product removed here is removed on the next seed run.
+sonatype:
+  - {name: Nexus Repository, category: Artifact repository, jfrog_products: [Artifactory, Container Registry],
+     url: "https://www.sonatype.com/products/sonatype-nexus-repository"}
+  - {name: Sonatype Firewall, category: Dependency firewall, jfrog_products: [Curation],
+     url: "https://www.sonatype.com/products/sonatype-repository-firewall"}
+  - {name: Sonatype Lifecycle, category: Software composition analysis, jfrog_products: [Xray],
+     url: "https://www.sonatype.com/products/open-source-security-dependency-management"}
+  - {name: Sonatype SBOM Manager, category: SBOM management, jfrog_products: [Xray],
+     url: "https://www.sonatype.com/products/sbom-manager"}
+github:
+  - {name: GitHub Packages, category: Artifact repository, jfrog_products: [Artifactory, Container Registry],
+     url: "https://docs.github.com/en/packages"}
+  - {name: GitHub Advanced Security, category: Application security, jfrog_products: [Xray, Advanced Security],
+     url: "https://github.com/security/advanced-security"}
+  - {name: GitHub MCP Registry, category: MCP registry, jfrog_products: [MCP Registry],
+     url: "https://github.com/mcp"}
+gitlab:
+  - {name: GitLab package registry, category: Artifact repository, jfrog_products: [Artifactory],
+     url: "https://docs.gitlab.com/user/packages/package_registry/"}
+  - {name: GitLab container registry, category: Container registry, jfrog_products: [Container Registry],
+     url: "https://docs.gitlab.com/user/packages/container_registry/"}
+  - {name: GitLab dependency scanning, category: Software composition analysis, jfrog_products: [Xray],
+     url: "https://docs.gitlab.com/user/application_security/dependency_scanning/"}
+cloudsmith:
+  - {name: Cloudsmith artifact management, category: Artifact repository,
+     jfrog_products: [Artifactory, Container Registry, Distribution], url: "https://cloudsmith.com/product"}
+  # named as its page names it ("Software supply chain security with Cloudsmith")
+  - {name: Cloudsmith software supply chain security, category: Supply chain security,
+     jfrog_products: [Curation], url: "https://cloudsmith.com/product/dependency-firewall"}
+snyk:
+  - {name: Snyk Open Source, category: Software composition analysis, jfrog_products: [Xray],
+     url: "https://snyk.io/product/open-source-security-management/"}
+  - {name: Snyk Container, category: Container security, jfrog_products: [Xray],
+     url: "https://snyk.io/product/container-vulnerability-management/"}
+  - {name: Snyk Code, category: Static analysis (SAST), jfrog_products: [Advanced Security],
+     url: "https://snyk.io/product/snyk-code/"}
+harness:
+  - {name: Harness Artifact Registry, category: Artifact repository, jfrog_products: [Artifactory, Container Registry],
+     url: "https://www.harness.io/products/artifact-registry"}
+  - {name: Harness Supply Chain Security, category: Supply chain security, jfrog_products: [Xray, AppTrust],
+     url: "https://www.harness.io/products/supply-chain-security"}
+aws:
+  - {name: AWS CodeArtifact, category: Artifact repository, jfrog_products: [Artifactory],
+     url: "https://aws.amazon.com/codeartifact/"}
+  - {name: Amazon ECR, category: Container registry, jfrog_products: [Container Registry],
+     url: "https://aws.amazon.com/ecr/"}
+  - {name: Amazon Inspector, category: Vulnerability scanning, jfrog_products: [Xray],
+     url: "https://aws.amazon.com/inspector/"}
+  - {name: Amazon SageMaker AI, category: MLOps platform, jfrog_products: [JFrog ML],
+     url: "https://aws.amazon.com/sagemaker/ai/"}
+azure:
+  - {name: Azure Artifacts, category: Artifact repository, jfrog_products: [Artifactory],
+     url: "https://azure.microsoft.com/en-us/products/devops/artifacts"}
+  - {name: Azure Container Registry, category: Container registry, jfrog_products: [Container Registry],
+     url: "https://azure.microsoft.com/en-us/products/container-registry"}
+  - {name: Azure Machine Learning, category: MLOps platform, jfrog_products: [JFrog ML],
+     url: "https://azure.microsoft.com/en-us/products/machine-learning"}
+google-cloud:
+  - {name: Artifact Registry, category: Artifact repository, jfrog_products: [Artifactory, Container Registry],
+     url: "https://docs.cloud.google.com/artifact-registry/docs"}
+  - {name: Artifact Analysis, category: Vulnerability scanning, jfrog_products: [Xray],
+     url: "https://docs.cloud.google.com/artifact-analysis/docs/artifact-analysis"}
+  - {name: Assured Open Source Software, category: Curated open source, jfrog_products: [Curation],
+     url: "https://cloud.google.com/security/products/assured-open-source-software"}
+docker:
+  - {name: Docker Hub, category: Container registry, jfrog_products: [Container Registry],
+     url: "https://www.docker.com/products/docker-hub/"}
+  - {name: Docker Scout, category: Container security, jfrog_products: [Xray],
+     url: "https://www.docker.com/products/docker-scout/"}
+  - {name: Docker MCP Catalog, category: MCP registry, jfrog_products: [MCP Registry],
+     url: "https://docs.docker.com/ai/mcp-catalog-and-toolkit/catalog/"}
+  # hardened images replace both where images come from and their vetting
+  - {name: Docker Hardened Images, category: Hardened images, jfrog_products: [Curation, Container Registry],
+     url: "https://www.docker.com/products/hardened-images/"}
+chainguard:
+  - {name: Chainguard Containers, category: Hardened images, jfrog_products: [Curation, Container Registry],
+     url: "https://www.chainguard.dev/containers"}
+  - {name: Chainguard Libraries, category: Curated open source, jfrog_products: [Curation],
+     url: "https://www.chainguard.dev/libraries"}
+black-duck:
+  - {name: Black Duck SCA, category: Software composition analysis, jfrog_products: [Xray],
+     url: "https://www.blackduck.com/software-composition-analysis-tools/black-duck-sca.html"}
+  - {name: Coverity, category: Static analysis (SAST), jfrog_products: [Advanced Security],
+     url: "https://www.blackduck.com/static-analysis-tools-sast/coverity.html"}
+aqua:
+  - {name: Aqua Platform, category: Cloud-native security, jfrog_products: [Xray, Runtime],
+     url: "https://www.aquasec.com/aqua-cloud-native-security-platform/"}
+  - {name: Trivy, category: Vulnerability scanning, jfrog_products: [Xray],
+     url: "https://github.com/aquasecurity/trivy"}
+socket:
+  - {name: Socket supply chain security, category: Supply chain security, jfrog_products: [Xray],
+     url: "https://socket.dev/"}
+  - {name: Socket Firewall, category: Dependency firewall, jfrog_products: [Curation],
+     url: "https://docs.socket.dev/docs/socket-firewall-overview"}
+endor-labs:
+  - {name: Endor Labs SCA with Reachability, category: Software composition analysis,
+     jfrog_products: [Xray, Advanced Security], url: "https://www.endorlabs.com/sca"}
+  - {name: Endor Labs Package Firewall, category: Dependency firewall, jfrog_products: [Curation],
+     url: "https://docs.endorlabs.com/integrations/package-firewall"}
+checkmarx:
+  - {name: Checkmarx One, category: Application security, jfrog_products: [Xray, Advanced Security],
+     url: "https://checkmarx.com/product/application-security-platform/"}
+mend:
+  - {name: Mend SCA, category: Software composition analysis, jfrog_products: [Xray],
+     url: "https://www.mend.io/sca/"}
+  - {name: Mend SAST, category: Static analysis (SAST), jfrog_products: [Advanced Security],
+     url: "https://www.mend.io/sast/"}
+  - {name: Mend AI, category: AI security, jfrog_products: [AI Catalog],
+     url: "https://www.mend.io/mend-ai/"}

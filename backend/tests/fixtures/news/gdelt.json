@@ -1,0 +1,4 @@
+{"articles": [
+ {"url": "https://a.example.com/one", "url_mobile": "", "title": "Sonatype ships thing", "seendate": "20261014T091500Z", "socialimage": "", "domain": "a.example.com", "language": "English", "sourcecountry": "United States"},
+ {"url": "https://b.example.org/two", "title": "Sonatype again", "seendate": "20261013T101000Z", "domain": "b.example.org", "language": "English", "sourcecountry": "Germany"}
+]}

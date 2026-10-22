@@ -1,0 +1,61 @@
+- slug: artifact-management
+  name: Artifact management
+  capabilities:
+    - {slug: package-type-breadth, name: Package type breadth, description: "Number and variety of package formats (Maven, npm, Docker, PyPI, Helm, etc.) the registry natively supports."}
+    - {slug: remote-proxy-caching, name: Remote proxy & caching, description: "Proxying and caching upstream public registries to speed up builds and insulate from outages."}
+    - {slug: replication-federation, name: Replication & federation, description: "Replicating and federating artifacts across sites, regions and instances."}
+    - {slug: container-registry, name: Container registry, description: "OCI/Docker registry capabilities including multi-tenant repos and image management."}
+    - {slug: deployment-options, name: Deployment options, description: "Availability as SaaS, self-hosted, hybrid and air-gapped deployments."}
+    - {slug: scale-ha, name: Scale & high availability, description: "Ability to run at enterprise scale with high availability and disaster recovery."}
+- slug: supply-chain-security
+  name: Supply chain security
+  capabilities:
+    - {slug: sca, name: Software composition analysis, description: "Detecting known vulnerabilities in open-source dependencies."}
+    - {slug: contextual-analysis, name: Contextual analysis, description: "Determining whether a vulnerability is actually reachable or exploitable in context."}
+    - {slug: malicious-package-blocking, name: Malicious package blocking, description: "Detecting and blocking malicious or typosquatted packages before they enter the pipeline."}
+    - {slug: secrets-detection, name: Secrets detection, description: "Finding leaked credentials and tokens in code, artifacts and containers."}
+    - {slug: sast, name: Static application security testing, description: "Scanning first-party source code for security flaws."}
+    - {slug: iac-scanning, name: IaC scanning, description: "Scanning infrastructure-as-code templates for misconfigurations."}
+    - {slug: license-compliance, name: License compliance, description: "Identifying and enforcing policy on open-source licenses."}
+    - {slug: sbom, name: SBOM generation & management, description: "Generating, ingesting and managing software bills of materials."}
+    - {slug: container-scanning, name: Container scanning, description: "Scanning container images for vulnerabilities and misconfigurations."}
+- slug: runtime-images
+  name: Runtime & images
+  capabilities:
+    - {slug: runtime-security, name: Runtime security, description: "Detecting and correlating threats and exposure in running workloads."}
+    - {slug: hardened-images, name: Hardened images, description: "Curated minimal base images with reduced attack surface and low CVE counts."}
+    - {slug: auto-remediation, name: Auto-remediation, description: "Automatically fixing or upgrading vulnerable dependencies and images."}
+- slug: release-distribution
+  name: Release & distribution
+  capabilities:
+    - {slug: release-bundles, name: Release bundles, description: "Immutable, signed bundles of artifacts promoted across environments."}
+    - {slug: edge-distribution, name: Edge distribution, description: "Distributing releases to edge nodes and remote sites at scale."}
+    - {slug: signing-attestation, name: Signing & attestation, description: "Signing artifacts and attaching verifiable provenance attestations."}
+- slug: governance-compliance
+  name: Governance & compliance
+  capabilities:
+    - {slug: policy-engine, name: Policy engine, description: "Defining and enforcing policy gates on artifacts and pipelines."}
+    - {slug: release-governance, name: Release governance, description: "Controlled promotion and approval of releases with evidence of what shipped."}
+    - {slug: audit-evidence, name: Audit evidence, description: "Collecting and exporting evidence for audits and regulatory requirements."}
+    - {slug: certifications, name: Certifications, description: "Compliance certifications such as SOC 2, ISO 27001 and FedRAMP."}
+- slug: ai-ml-supply-chain
+  name: AI/ML supply chain
+  capabilities:
+    - {slug: model-registry, name: Model registry, description: "Storing, versioning and governing ML models as first-class artifacts."}
+    - {slug: model-scanning, name: Model scanning, description: "Scanning ML models for malicious code, unsafe serialization and vulnerabilities."}
+    - {slug: ai-catalog-mcp-registry, name: AI catalog & MCP registry, description: "Curated catalog of approved AI models and MCP servers."}
+    - {slug: agent-governance, name: Agent governance, description: "Controls and policy over AI agents and the tools and packages they consume."}
+    - {slug: mlops-serving, name: MLOps & model serving, description: "Pipelines and infrastructure for training, deploying and serving models."}
+- slug: developer-experience
+  name: Developer experience
+  capabilities:
+    - {slug: cicd-integrations, name: CI/CD integrations, description: "Native integrations with CI/CD systems and build tools."}
+    - {slug: ide-cli, name: IDE & CLI, description: "IDE plugins and command-line tooling for developers."}
+    - {slug: ai-coding-agent-integrations, name: AI coding agent integrations, description: "Integrations with AI coding assistants and agents such as Copilot, Cursor and Claude Code."}
+    - {slug: cloud-marketplaces, name: Cloud marketplaces, description: "Availability and billing through AWS, Azure and Google Cloud marketplaces."}
+- slug: business-model
+  name: Business model
+  capabilities:
+    - {slug: pricing-transparency, name: Pricing transparency, description: "How openly pricing is published and how predictable it is."}
+    - {slug: free-tier, name: Free tier, description: "Availability and generosity of free or community offerings."}
+    - {slug: packaging, name: Packaging, description: "How features are bundled into plans, editions and platform tiers."}

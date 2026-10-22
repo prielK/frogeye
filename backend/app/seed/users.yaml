@@ -1,0 +1,7 @@
+password: frogeye-demo
+users:
+  - {email: analyst@frogeye.local, name: Avery Cohen, role: analyst}
+  - {email: sales@frogeye.local, name: Sam Rivera, role: sales}
+  - {email: pm@frogeye.local, name: Priya Shah, role: pm}
+  - {email: exec@frogeye.local, name: Eli Morgan, role: exec}
+  - {email: devrel@frogeye.local, name: Noa Bar, role: pmm_devrel}

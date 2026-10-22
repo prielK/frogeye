@@ -1,0 +1,120 @@
+# Setup: cp .env.example .env   (compose fails clearly if .env is missing)
+# Dev override (API on :8000, hot reload): docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+x-app: &app
+  build:
+    context: ./backend
+    target: runtime
+  env_file: .env
+  restart: unless-stopped
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-frogeye}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-frogeye}
+      POSTGRES_DB: ${POSTGRES_DB:-frogeye}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    <<: *app
+    image: frogeye-backend
+    environment:
+      RUN_MIGRATIONS: "1"
+    # --timeout-graceful-shutdown: open SSE streams (GET /events) would block shutdown forever.
+    command: ["sh", "-c", "python -m app.seed --if-empty && uvicorn app.main:app --host 0.0.0.0 --port 8000 --timeout-graceful-shutdown 5"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health/ready')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  worker:
+    <<: *app
+    image: frogeye-backend
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+    command: ["celery", "-A", "app.workers.celery_app", "worker", "-Q", "daily", "-c", "2", "-n", "daily@%h", "-l", "INFO"]
+    healthcheck:
+      test: ["CMD-SHELL", "celery -A app.workers.celery_app inspect ping -t 15 -d daily@$$HOSTNAME"]
+      interval: 30s
+      timeout: 20s
+      retries: 5
+      start_period: 30s
+
+  worker-agents:
+    <<: *app
+    image: frogeye-backend
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+    command: ["celery", "-A", "app.workers.celery_app", "worker", "-Q", "agents", "-c", "2", "-n", "agents@%h", "-l", "INFO"]
+    healthcheck:
+      test: ["CMD-SHELL", "celery -A app.workers.celery_app inspect ping -t 15 -d agents@$$HOSTNAME"]
+      interval: 30s
+      timeout: 20s
+      retries: 5
+      start_period: 30s
+
+  scheduler:
+    <<: *app
+    image: frogeye-backend
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+    command: ["celery", "-A", "app.workers.celery_app", "beat", "-s", "/tmp/celerybeat-schedule", "-l", "INFO"]
+
+  web:
+    build:
+      context: ./frontend
+    image: frogeye-web
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  mailpit:
+    image: axllent/mailpit
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
+
+volumes:
+  pgdata:

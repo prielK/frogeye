@@ -1,0 +1,49 @@
+{
+  "apiVersion": "1",
+  "jobs": [
+    {
+      "id": "6f2a9c1e-0b3d-4e5f-8a7b-2c1d0e9f8a7b",
+      "title": "Machine Learning Engineer",
+      "department": "Engineering",
+      "team": "AI Platform",
+      "employmentType": "FullTime",
+      "location": "New York, NY",
+      "secondaryLocations": [],
+      "shouldDisplayCompensationOnJobPostings": false,
+      "publishedAt": "2026-09-20T12:00:00.000+00:00",
+      "isListed": true,
+      "isRemote": false,
+      "workplaceType": "OnSite",
+      "address": {
+        "postalAddress": {
+          "addressLocality": "New York",
+          "addressRegion": "New York",
+          "addressCountry": "United States"
+        }
+      },
+      "jobUrl": "https://jobs.ashbyhq.com/acmesec/6f2a9c1e-0b3d-4e5f-8a7b-2c1d0e9f8a7b",
+      "applyUrl": "https://jobs.ashbyhq.com/acmesec/6f2a9c1e-0b3d-4e5f-8a7b-2c1d0e9f8a7b/application",
+      "descriptionHtml": "<p>Train models that flag risky dependencies for Acmesec customers.</p>",
+      "descriptionPlain": "Train models that flag risky dependencies for Acmesec customers."
+    },
+    {
+      "id": "0a1b2c3d-4e5f-4a6b-9c7d-8e9f0a1b2c3d",
+      "title": "Customer Success Manager",
+      "department": "Customer Success",
+      "team": "Post-sales",
+      "employmentType": "FullTime",
+      "location": "Remote (EMEA)",
+      "secondaryLocations": [{"location": "Amsterdam, Netherlands", "address": {"postalAddress": {"addressCountry": "Netherlands"}}}],
+      "shouldDisplayCompensationOnJobPostings": false,
+      "publishedAt": "2026-10-01T08:00:00.000+00:00",
+      "isListed": true,
+      "isRemote": true,
+      "workplaceType": "Remote",
+      "address": null,
+      "jobUrl": "https://jobs.ashbyhq.com/acmesec/0a1b2c3d-4e5f-4a6b-9c7d-8e9f0a1b2c3d",
+      "applyUrl": "https://jobs.ashbyhq.com/acmesec/0a1b2c3d-4e5f-4a6b-9c7d-8e9f0a1b2c3d/application",
+      "descriptionHtml": "<p>Help Acmesec customers roll out curated registries.</p>",
+      "descriptionPlain": "Help Acmesec customers roll out curated registries."
+    }
+  ]
+}

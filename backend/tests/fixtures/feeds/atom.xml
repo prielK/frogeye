@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Atom Releases</title>
+  <id>tag:f.test,2026:feed</id>
+  <updated>2026-10-14T10:00:00Z</updated>
+  <entry>
+    <title>v1.2.0</title>
+    <id>tag:f.test,2026:release/1.2.0</id>
+    <link href="https://f.test/releases/1.2.0"/>
+    <updated>2026-10-14T10:00:00Z</updated>
+    <author><name>Bob</name></author>
+    <content type="html">&lt;p&gt;Release notes&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>v1.1.0</title>
+    <id>tag:f.test,2026:release/1.1.0</id>
+    <link href="https://f.test/releases/1.1.0"/>
+    <updated>2026-10-01T10:00:00Z</updated>
+    <summary>Older release</summary>
+  </entry>
+</feed>

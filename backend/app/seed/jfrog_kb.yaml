@@ -1,0 +1,37 @@
+# JFrog product and solution pages for the knowledge base (robots.txt respected, <= 1 req/s).
+# Each URL was verified live (HTTP 200, allowed by robots.txt) on 2026-10-18.
+# `extract: sections` (app/rag/kb.py): a landing page whose product text sits in short feature
+# blocks, where the article extractor kept only the page's densest paragraphs (2026-10-19).
+pages:
+  - name: Artifactory
+    url: https://jfrog.com/artifactory/
+  - name: Xray
+    url: https://jfrog.com/xray/
+  - name: Advanced Security (contextual analysis)
+    url: https://jfrog.com/advanced-security/
+    extract: sections  # the article extractor kept only the closing call to action
+  - name: Curation
+    url: https://jfrog.com/curation/
+  - name: Distribution
+    url: https://jfrog.com/distribution/
+  - name: AppTrust
+    url: https://jfrog.com/apptrust/
+  - name: Runtime
+    url: https://jfrog.com/runtime/
+    extract: sections  # the article extractor kept only customer testimonials
+  - name: JFrog ML
+    url: https://jfrog.com/jfrog-ml/
+  - name: AI Catalog
+    url: https://jfrog.com/ai-catalog/
+  - name: MCP Registry
+    url: https://jfrog.com/ai-catalog/mcp-registry/
+  - name: Container Registry
+    url: https://jfrog.com/container-registry/
+  - name: Platform overview
+    url: https://jfrog.com/platform/
+  - name: Pricing
+    url: https://jfrog.com/pricing/
+  - name: Connect
+    url: https://jfrog.com/connect/
+  - name: Solutions (enterprise scale)
+    url: https://jfrog.com/solutions/global-enterprise-scale/

@@ -1,0 +1,54 @@
+[
+  {
+    "additional": "<div>Acmesec is an equal opportunity employer.</div>",
+    "additionalPlain": "Acmesec is an equal opportunity employer.",
+    "categories": {
+      "commitment": "Full-time",
+      "department": "Marketing",
+      "location": "Berlin, Germany",
+      "team": "Developer Relations",
+      "allLocations": ["Berlin, Germany"]
+    },
+    "createdAt": 1789459200000,
+    "descriptionPlain": "Acmesec is looking for a Developer Advocate to grow our open source community.\n",
+    "description": "<div>Acmesec is looking for a Developer Advocate to grow our open source community.</div>",
+    "id": "3c1f6a2e-8b1d-4d7e-9a51-1f2e3d4c5b6a",
+    "lists": [
+      {"text": "What you will do", "content": "<li>Write tutorials and talks</li><li>Run community office hours</li>"}
+    ],
+    "text": "Developer Advocate",
+    "country": "DE",
+    "workplaceType": "hybrid",
+    "opening": "",
+    "openingPlain": "",
+    "descriptionBody": "",
+    "descriptionBodyPlain": "",
+    "hostedUrl": "https://jobs.lever.co/acmesec/3c1f6a2e-8b1d-4d7e-9a51-1f2e3d4c5b6a",
+    "applyUrl": "https://jobs.lever.co/acmesec/3c1f6a2e-8b1d-4d7e-9a51-1f2e3d4c5b6a/apply"
+  },
+  {
+    "additional": "",
+    "additionalPlain": "",
+    "categories": {
+      "commitment": "Full-time",
+      "department": "Product",
+      "location": "Remote",
+      "team": "Product Management",
+      "allLocations": ["Remote"]
+    },
+    "createdAt": 1790951400000,
+    "descriptionPlain": "Own the Acmesec policy engine roadmap from discovery to launch.",
+    "description": "<div>Own the Acmesec policy engine roadmap from discovery to launch.</div>",
+    "id": "9d8e7f6a-5b4c-4a3b-8c2d-1e0f9a8b7c6d",
+    "lists": [],
+    "text": "Senior Product Manager",
+    "country": "US",
+    "workplaceType": "remote",
+    "opening": "",
+    "openingPlain": "",
+    "descriptionBody": "",
+    "descriptionBodyPlain": "",
+    "hostedUrl": "https://jobs.lever.co/acmesec/9d8e7f6a-5b4c-4a3b-8c2d-1e0f9a8b7c6d",
+    "applyUrl": "https://jobs.lever.co/acmesec/9d8e7f6a-5b4c-4a3b-8c2d-1e0f9a8b7c6d/apply"
+  }
+]

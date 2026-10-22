@@ -1,0 +1,6 @@
+[
+ {"id": 101, "tag_name": "v0.60.0", "name": "v0.60.0", "draft": false, "prerelease": false, "html_url": "https://github.com/aquasecurity/trivy/releases/tag/v0.60.0", "published_at": "2026-10-10T12:00:00Z", "created_at": "2026-10-10T11:00:00Z", "body": "## Changes\n- stuff"},
+ {"id": 102, "tag_name": "v0.61.0-rc1", "name": "", "draft": false, "prerelease": true, "html_url": "https://github.com/aquasecurity/trivy/releases/tag/v0.61.0-rc1", "published_at": null, "created_at": "2026-10-12T08:00:00Z", "body": null},
+ {"id": 103, "tag_name": "v0.62.0", "name": "draft", "draft": true, "prerelease": false, "html_url": "https://github.com/aquasecurity/trivy/releases/tag/untagged", "published_at": null, "created_at": "2026-10-13T08:00:00Z", "body": "x"},
+ {"id": 100, "tag_name": "v0.59.0", "name": "v0.59.0", "draft": false, "prerelease": false, "html_url": "https://github.com/aquasecurity/trivy/releases/tag/v0.59.0", "published_at": "2026-09-01T12:00:00Z", "created_at": "2026-09-01T11:00:00Z", "body": "old"}
+]

@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-10-21T19:30:11+00:00",
+  "models": {
+    "model_fast": "gpt-5-nano",
+    "model_smart": "gpt-6-luna",
+    "reasoning_effort_fast": "minimal",
+    "reasoning_effort_smart": "low",
+    "embedding_model": "text-embedding-3-small",
+    "embedding_dims": 512
+  },
+  "record_runs": [
+    {
+      "at": "2026-10-21T18:47:14+00:00",
+      "live_usd": 0.0031,
+      "live_calls": 118
+    },
+    {
+      "at": "2026-10-21T18:51:06+00:00",
+      "live_usd": 0.0245,
+      "live_calls": 195
+    },
+    {
+      "at": "2026-10-21T19:30:11+00:00",
+      "live_usd": 0.009447,
+      "live_calls": 20
+    }
+  ]
+}
