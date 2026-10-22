@@ -48,7 +48,7 @@ jobs:
       TEST_DATABASE_URL: postgresql+psycopg://frogeye:frogeye@localhost:5432/frogeye_test
       REDIS_URL: redis://localhost:6379/0
       JWT_SECRET: ci-secret-key-for-pytest-at-least-32-bytes-long
-      HTTP_USER_AGENT: "FrogEye/0.1 (competitive-intelligence research bot; contact: ci@example.com)"
+      HTTP_USER_AGENT: "Mozilla/5.0 (compatible; FrogEye/0.1)"
       SEC_USER_AGENT: "FrogEye Research ci@example.com"
     steps:
       - uses: actions/checkout@v4
